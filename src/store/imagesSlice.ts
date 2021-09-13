@@ -24,6 +24,7 @@ interface ImageMetadataResponse {
 
 export interface ImageMetadata {
   id: string,
+  copyright: string,
   date: string,
   url: string,
   hdurl: string,
@@ -45,10 +46,16 @@ const initialState: ImageMetadataState = imagesAdapter.getInitialState({
   error: undefined
 });
 
-const API_KEY = process.env.API_KEY;
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
 export const fetchImagesMetadata = createAsyncThunk('images/requestStatus', async () => {
-  const response = await axios.get<ImageMetadataResponse>(`https://api.nasa.gov/planetary/apod?API_KEY=${API_KEY}`);
+  const response = await axios.get<ImageMetadataResponse[]>(`https://api.nasa.gov/planetary/apod`, {
+    params: {
+      api_key: API_KEY,
+      start_date: '2021-04-01',
+      end_date: '2021-04-20'
+    }
+  });
   // const response = await fetch(`https://api.nasa.gov/planetary/apod?API_KEY=${API_KEY}`, {
   //   method: 'GET',
   // });
@@ -67,17 +74,21 @@ const imagesSlice = createSlice({
     builder.addCase(fetchImagesMetadata.pending, (state, action) => {
       state.status = 'loading';
     });
-    builder.addCase(fetchImagesMetadata.fulfilled, (state, action: PayloadAction<ImageMetadataResponse>) => {
+    builder.addCase(fetchImagesMetadata.fulfilled, (state, action: PayloadAction<ImageMetadataResponse[]>) => {
       state.status = 'succeeded';
-      const data: ImageMetadata = {
-        id: action.payload.url,
-        date: action.payload.date,
-        url: action.payload.url,
-        hdurl: action.payload.hdurl,
-        media_type: action.payload.media_type,
-        title: action.payload.title
-      }
-      imagesAdapter.upsertOne(state, data);
+      console.log(action.payload);
+      const data: ImageMetadata[] = action.payload.filter(imgMeta => imgMeta.media_type === 'image').map((imgMeta) => {
+        return {
+          id: imgMeta.url,
+          copyright: imgMeta.copyright,
+          date: imgMeta.date,
+          url: imgMeta.url,
+          hdurl: imgMeta.hdurl,
+          media_type: imgMeta.media_type,
+          title: imgMeta.title
+        }
+      });
+      imagesAdapter.upsertMany(state, data);
     });
     builder.addCase(fetchImagesMetadata.rejected, (state, action) => {
       state.status = 'failed';

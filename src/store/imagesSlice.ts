@@ -60,7 +60,7 @@ export const fetchImagesMetadata = createAsyncThunk('images/requestStatus', asyn
   //   method: 'GET',
   // });
   const data = response.data;
-  console.log(response);
+  // console.log(response);
   return data;
 });
 
@@ -76,7 +76,7 @@ const imagesSlice = createSlice({
     });
     builder.addCase(fetchImagesMetadata.fulfilled, (state, action: PayloadAction<ImageMetadataResponse[]>) => {
       state.status = 'succeeded';
-      console.log(action.payload);
+      // console.log(action.payload);
       const data: ImageMetadata[] = action.payload.filter(imgMeta => imgMeta.media_type === 'image').map((imgMeta) => {
         return {
           id: imgMeta.url,

@@ -7,6 +7,7 @@ import Image from 'next/image';
 
 import Date from '@app/components/Date';
 import ImageModal from '@app/components/ImageModal';
+import ReactionButtons from '../ReactionButtons';
 
 const shimmer = (w: number, h: number) => `
 <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -109,11 +110,17 @@ export default function ImageCard({
           </button>
         </div>
   
-        <div className="font-bold flex flex-col ml-2">
-          {title}
-          <Date dateString={date} />
-          {copyright && <div className="font-normal">Copyright: {copyright}</div>}
+        <div className="flex justify-between items-center">
+          <div className="font-bold flex flex-col md:ml-2">
+            {title}
+            <Date dateString={date} />
+            {copyright && <div className="font-normal">Copyright: {copyright}</div>}
+          </div>
+          <div className="md:mr-2">
+            <ReactionButtons url={url} date={date} />
+          </div>
         </div>
+
       </div>
     </>
   );

@@ -1,10 +1,12 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 
 import imagesReducer from '@app/store/imagesSlice';
+import reactionsReducer from '@app/store/reactionsSlice';
 
 export const store = configureStore({
   reducer: {
     images: imagesReducer,
+    reactions: reactionsReducer
     //likes: likesReducer,
   }
 });

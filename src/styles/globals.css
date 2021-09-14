@@ -20,7 +20,10 @@ a {
   box-sizing: border-box;
 }
 
---color-app-primary: 99, 110, 114;
---color-app-secondary: 45, 52, 54;
---color-app-accent: 178, 190, 195;
---color-app-bg: 223, 230, 233;
+:root {
+  --color-app-primary: 99, 110, 114;
+  --color-app-secondary: 45, 52, 54;
+  --color-app-accent: 178, 190, 195;
+  --color-app-bg: 223, 230, 233;
+}
+

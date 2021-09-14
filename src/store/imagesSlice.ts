@@ -22,8 +22,14 @@ interface ImageMetadataResponse {
   url: string
 };
 
+type ReactionEmoji = 'heart' | 'thumbsDown';
+
+type ReactionEmojis = {
+  [key in ReactionEmoji]: boolean
+}
+
 export interface ImageMetadata {
-  id: string,
+  // id: string,
   title: string
   copyright: string,
   date: string,
@@ -42,6 +48,7 @@ interface ImageMetadataState extends EntityState<ImageMetadata> {
 };
 
 const imagesAdapter = createEntityAdapter<ImageMetadata>({
+  selectId: (image) => image.url,
   sortComparer: (a, b) => b.date.localeCompare(a.date)
 });
 
@@ -78,19 +85,19 @@ const imagesSlice = createSlice({
   name: 'images',
   initialState,
   reducers: {
-    setImageLoaded(state, action: PayloadAction<{
-      imgId: string,
-      hd: boolean,
-      loaded: boolean
-    }>) {
-      const {imgId, hd, loaded} = action.payload;
-      const existingImage = state.entities[imgId];
-      if (existingImage && hd) {
-        existingImage.hdUrlLoaded = loaded;
-      } else if (existingImage && !hd) {
-        existingImage.urlLoaded = loaded;
-      }
-    }
+    // setImageLoaded(state, action: PayloadAction<{
+    //   imgId: string,
+    //   hd: boolean,
+    //   loaded: boolean
+    // }>) {
+    //   const {imgId, hd, loaded} = action.payload;
+    //   const existingImage = state.entities[imgId];
+    //   if (existingImage && hd) {
+    //     existingImage.hdUrlLoaded = loaded;
+    //   } else if (existingImage && !hd) {
+    //     existingImage.urlLoaded = loaded;
+    //   }
+    // }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchImagesMetadata.pending, (state, action) => {
@@ -102,7 +109,7 @@ const imagesSlice = createSlice({
       // console.log(action.payload);
       const data: ImageMetadata[] = action.payload.filter(imgMeta => imgMeta.media_type === 'image').map((imgMeta) => {
         return {
-          id: imgMeta.url,
+          // id: imgMeta.url,
           title: imgMeta.title,
           copyright: imgMeta.copyright,
           date: imgMeta.date,
@@ -123,9 +130,9 @@ const imagesSlice = createSlice({
   }
 });
 
-export const {
-  setImageLoaded
-} = imagesSlice.actions;
+// export const {
+//   setImageLoaded
+// } = imagesSlice.actions;
 
 export const {
   selectAll: selectAllImageMeta,

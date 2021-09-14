@@ -72,7 +72,7 @@ const Home: NextPage = () => {
                 <GridWrapper>
                   {images.map((imgMeta) => (
                     <ImageCard
-                      key={imgMeta.id}
+                      key={imgMeta.url}
                       title={imgMeta.title}
                       copyright={imgMeta.copyright}
                       date={imgMeta.date}

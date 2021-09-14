@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@app/store/hooks';
-import { selectImageMetaById, setImageLoaded } from '@app/store/imagesSlice';
+import { selectImageMetaById } from '@app/store/imagesSlice';
 
 export default function useProgressiveImg(url: string) {
   const [blur, setBlur] = useState(true);

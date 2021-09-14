@@ -1,4 +1,4 @@
-import { useEffect, ReactNode, ReactChildren, useState } from 'react'
+import { useEffect, ReactNode, ReactChildren, useState, useMemo } from 'react'
 import type { NextPage } from 'next';
 import { format, parseISO, subDays, formatISO } from 'date-fns';
 import Head from 'next/head'
@@ -18,6 +18,7 @@ const DATE_FORMAT = 'yyyy-MM-dd';
 const Home: NextPage = () => {
   const dispatch = useAppDispatch();
   const imagesStatus = useAppSelector(state => state.images.status);
+  const firsLoad = useAppSelector(state => state.images.firstLoad);
   const error = useAppSelector(state => state.images.error);
   const images = useAppSelector(selectAllImageMeta);
 
@@ -42,25 +43,13 @@ const Home: NextPage = () => {
   }
 
   let statusText;
-  let items: ReactNode[] = [];
 
   if (imagesStatus === 'loading') {
-    statusText = <div>Loading</div>
+    statusText = <div>Loading Images</div>
   } else if(imagesStatus === 'succeeded') {
     statusText = <div>Images Loaded</div>
-    items = images.map((imgMeta) => (
-      <ImageCard
-        key={imgMeta.id}
-        title={imgMeta.title}
-        copyright={imgMeta.copyright}
-        date={imgMeta.date}
-        description={imgMeta.explanation}
-        url={imgMeta.url}
-        hdurl={imgMeta.hdurl}
-     />
-    ));
   } else if (imagesStatus === 'failed') {
-    statusText = <div>{error}</div>
+    statusText = <div>Error: {error}</div>
   }
 
   return (
@@ -73,21 +62,32 @@ const Home: NextPage = () => {
         </div>
 
         <section aria-label="Infinite scrolling list of images">
-
-          {imagesStatus === 'succeeded'
+          {imagesStatus === 'succeeded' || !firsLoad
             ? <InfiniteScroll
-                dataLength={items.length}
+                dataLength={images.length}
                 next={fetchData}
                 hasMore={true}
-                loader={<h4>Loading...</h4>}
+                loader={<h4>{statusText}</h4>}
               >
                 <GridWrapper>
-                  {items}
+                  {images.map((imgMeta) => (
+                    <ImageCard
+                      key={imgMeta.id}
+                      title={imgMeta.title}
+                      copyright={imgMeta.copyright}
+                      date={imgMeta.date}
+                      description={imgMeta.explanation}
+                      url={imgMeta.url}
+                      hdurl={imgMeta.hdurl}
+                    />
+                  ))}
                 </GridWrapper>
                 
               </InfiniteScroll>
             : <div>spinner</div>
           }
+     
+
      
 
         </section>

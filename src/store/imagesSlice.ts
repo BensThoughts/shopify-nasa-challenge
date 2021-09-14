@@ -38,6 +38,7 @@ export interface ImageMetadata {
 interface ImageMetadataState extends EntityState<ImageMetadata> {
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | undefined;
+  firstLoad: boolean;
 };
 
 const imagesAdapter = createEntityAdapter<ImageMetadata>({
@@ -46,7 +47,8 @@ const imagesAdapter = createEntityAdapter<ImageMetadata>({
 
 const initialState: ImageMetadataState = imagesAdapter.getInitialState({
   status: 'idle',
-  error: undefined
+  error: undefined,
+  firstLoad: false,
 });
 
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
@@ -96,6 +98,7 @@ const imagesSlice = createSlice({
     });
     builder.addCase(fetchImagesMetadata.fulfilled, (state, action: PayloadAction<ImageMetadataResponse[]>) => {
       state.status = 'succeeded';
+      state.firstLoad = false;
       // console.log(action.payload);
       const data: ImageMetadata[] = action.payload.filter(imgMeta => imgMeta.media_type === 'image').map((imgMeta) => {
         return {

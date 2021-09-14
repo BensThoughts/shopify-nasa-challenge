@@ -2,7 +2,6 @@ import { Fragment, ReactNode } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import styled from '@emotion/styled';
 
-
 const ImageWrap = styled.button`
   width: screen;
   height: screen;
@@ -15,7 +14,7 @@ interface ImageModalProps {
   description?: string;
   isOpen: boolean;
   onClose: () => void;
-  children?: ReactNode;
+  children: ReactNode;
 }
 
 export default function ImageModal({

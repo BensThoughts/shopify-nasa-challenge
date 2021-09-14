@@ -7,7 +7,7 @@ export default function ImageButton() {
   function fetchImageMeta() {
     dispatch(fetchImagesMetadata({
       start_date: '2021-03-01',
-      end_date: '2021-03-29'
+      end_date: '2021-03-10'
     }));
   }
 

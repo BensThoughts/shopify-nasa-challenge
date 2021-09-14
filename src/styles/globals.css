@@ -1,9 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: rgb(223, 230, 233);
 }
 
 a {
@@ -14,3 +19,8 @@ a {
 * {
   box-sizing: border-box;
 }
+
+--color-app-primary: 99, 110, 114;
+--color-app-secondary: 45, 52, 54;
+--color-app-accent: 178, 190, 195;
+--color-app-bg: 223, 230, 233;

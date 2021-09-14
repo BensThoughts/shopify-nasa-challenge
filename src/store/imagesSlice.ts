@@ -24,12 +24,15 @@ interface ImageMetadataResponse {
 
 export interface ImageMetadata {
   id: string,
+  title: string
   copyright: string,
   date: string,
+  explanation: string,
   url: string,
+  urlLoaded: boolean,
   hdurl: string,
+  hdUrlLoaded: boolean,
   media_type: string,
-  title: string
 };
 
 interface ImageMetadataState extends EntityState<ImageMetadata> {
@@ -73,7 +76,19 @@ const imagesSlice = createSlice({
   name: 'images',
   initialState,
   reducers: {
-
+    setImageLoaded(state, action: PayloadAction<{
+      imgId: string,
+      hd: boolean,
+      loaded: boolean
+    }>) {
+      const {imgId, hd, loaded} = action.payload;
+      const existingImage = state.entities[imgId];
+      if (existingImage && hd) {
+        existingImage.hdUrlLoaded = loaded;
+      } else if (existingImage && !hd) {
+        existingImage.urlLoaded = loaded;
+      }
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchImagesMetadata.pending, (state, action) => {
@@ -85,12 +100,15 @@ const imagesSlice = createSlice({
       const data: ImageMetadata[] = action.payload.filter(imgMeta => imgMeta.media_type === 'image').map((imgMeta) => {
         return {
           id: imgMeta.url,
+          title: imgMeta.title,
           copyright: imgMeta.copyright,
           date: imgMeta.date,
+          explanation: imgMeta.explanation,
           url: imgMeta.url,
+          urlLoaded: false,
           hdurl: imgMeta.hdurl,
+          hdUrlLoaded: false,
           media_type: imgMeta.media_type,
-          title: imgMeta.title
         }
       });
       imagesAdapter.upsertMany(state, data);
@@ -101,6 +119,10 @@ const imagesSlice = createSlice({
     });
   }
 });
+
+export const {
+  setImageLoaded
+} = imagesSlice.actions;
 
 export const {
   selectAll: selectAllImageMeta,

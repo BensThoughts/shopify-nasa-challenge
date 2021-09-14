@@ -6,6 +6,7 @@ const Wrapper = styled.div<{
 }>`
   display: grid;
   align-items: center;
+  justify-items: center;
   row-gap: 3rem;
   grid-template-columns: ${({ charWidth = 90 }) => `1fr min(${charWidth}ch, 100%) 1fr`};
   * {

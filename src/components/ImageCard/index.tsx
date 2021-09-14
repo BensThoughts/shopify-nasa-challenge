@@ -42,12 +42,6 @@ const ImageBlurContainer = styled.div<{
   transition: ${({ blur = true }) => blur ? 'none' : 'filter 0.2s ease-out'};
 `;
 
-const ImageContainer = styled(Image)`
-  z-index: 3;
-  height: 100%;
-  width: 400px;
-  object-fit: scale-down;
-`;
 
 type ImageCardProps = {
   title: string;
@@ -57,6 +51,9 @@ type ImageCardProps = {
   url: string;
   hdurl: string;
 } & HTMLAttributes<HTMLDivElement>
+
+const SMALL_SIZE = 1080;
+const LARGE_SIZE = 1080;
 
 export default function ImageCard({
   title,
@@ -91,13 +88,13 @@ export default function ImageCard({
           <Image
             src={url}
             alt={title}
-            width="800"
-            height="800"
+            width={LARGE_SIZE}
+            height={LARGE_SIZE}
             placeholder="blur"
             onClick={() => setIsOpen(false)}
             onLoadingComplete={() => setBlurFull(false)}
             layout="intrinsic"
-            blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(800, 800))}`}
+            blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(LARGE_SIZE, LARGE_SIZE))}`}
             className="object-contain"
           />
         </ImageBlurContainer>
@@ -109,21 +106,21 @@ export default function ImageCard({
               <Image
               src={url}
               alt={title}
-              width="960"
-              height="960"
+              width={SMALL_SIZE}
+              height={SMALL_SIZE}
               placeholder="blur"
               // onLoad={() => setBlurCSS(false)}
               onLoadingComplete={() => setBlurSmall(false)}
               layout="intrinsic"
-              blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(960, 960))}`}
-              className="object-cover"
+              blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(SMALL_SIZE, SMALL_SIZE))}`}
+              className="object-cover" // TODO: object-cover or object-contain, which looks better?
               />
             </ImageBlurContainer>
 
           </button>
         </div>
   
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center gap-x-4">
           <div className="font-bold flex flex-col md:ml-2">
             {title}
             <Date dateString={date} />

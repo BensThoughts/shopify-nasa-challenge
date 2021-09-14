@@ -101,7 +101,7 @@ export default function ImageCard({
               // onLoad={() => setBlurCSS(false)}
               onLoadingComplete={() => setBlurSmall(false)}
               layout="intrinsic"
-              blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
+              blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(960, 960))}`}
               className="object-cover"
               />
             </ImageBlurContainer>

@@ -31,45 +31,42 @@ const StyledBookmark = styled(Bookmark)<{
 interface ReactionButtonProps {
   url: string;
   date: string;
+  bookmarked: boolean;
+  hearted: boolean;
 }
 
 export default function ReactionButtons({
   url,
-  date
+  date,
+  bookmarked,
+  hearted
 }: ReactionButtonProps) {
-  const [bookmark, rawSetBookmark] = useState(false);
-  const [heart, rawSetHeart] = useState(false);
+  const [bookmark, rawSetBookmark] = useState(bookmarked);
+  const [heart, rawSetHeart] = useState(hearted);
   const dispatch = useAppDispatch();
-  const reaction = useAppSelector(state => selectReactionsById(state, url));
-  
-  // useEffect(() => {
-  //   dispatch(upsertReaction({
-  //     url: url,
-  //     date: date,
-  //     heart: heart,
-  //     thumbsDown: thumbsDown
-  //   }))
-  // }, [heart, thumbsDown, date, dispatch, url])
 
+  
   function setHeart() {
+    dispatch(upsertReaction({
+      url: url,
+      date: date,
+      heart: !heart,
+      bookmark: bookmark
+    }));
     rawSetHeart(!heart);
   };
 
-  function setThumbsDown() {
+  function setBookmark() {
+    dispatch(upsertReaction({
+      url: url,
+      date: date,
+      heart: heart,
+      bookmark: !bookmark
+    }));
     rawSetBookmark(!bookmark);
-
-    // dispatch(upsertReaction({
-    //   url: url,
-    //   date: date,
-    //   heart: heart,
-    //   thumbsDown: thumbsDown
-    // }))
   }
 
-  if (reaction) {
-    rawSetBookmark(reaction.reactions.thumbsDown);
-    rawSetHeart(reaction.reactions.heart);
-  }
+
 
 
   return (
@@ -77,7 +74,7 @@ export default function ReactionButtons({
       <button onClick={setHeart}>
         <AnimatedIcon activated={heart} className=""><StyledHeart heart={heart} /></AnimatedIcon>
       </button>
-      <button onClick={setThumbsDown}>
+      <button onClick={setBookmark}>
         <AnimatedIcon activated={bookmark} className=""><StyledBookmark bookmark={bookmark} className="" /></AnimatedIcon>
       </button>  
     </div>

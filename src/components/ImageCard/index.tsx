@@ -5,6 +5,8 @@ import { HTMLAttributes } from 'react';
 
 import Image from 'next/image';
 
+import { useAppDispatch, useAppSelector } from '@app/store/hooks';
+import { selectReactionsById } from '@app/store/reactionsSlice';
 import Date from '@app/components/Date';
 import ImageModal from '@app/components/ImageModal';
 import ReactionButtons from '../ReactionButtons';
@@ -65,6 +67,14 @@ export default function ImageCard({
   const [blurSmall, setBlurSmall] = useState(true);
   const [blurFull, setBlurFull] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+  const reaction = useAppSelector(state => selectReactionsById(state, url));
+  let bookmarked = false;
+  let hearted = false;
+
+  if (reaction) {
+    bookmarked = reaction.reactions.bookmark;
+    hearted = reaction.reactions.heart;
+  }
 
   return (
     <>
@@ -117,7 +127,7 @@ export default function ImageCard({
             {copyright && <div className="font-normal">Copyright: {copyright}</div>}
           </div>
           <div className="md:mr-2">
-            <ReactionButtons url={url} date={date} />
+            <ReactionButtons url={url} date={date} hearted={hearted} bookmarked={bookmarked} />
           </div>
         </div>
 

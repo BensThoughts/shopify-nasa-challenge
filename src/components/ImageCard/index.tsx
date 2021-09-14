@@ -52,8 +52,8 @@ type ImageCardProps = {
   hdurl: string;
 } & HTMLAttributes<HTMLDivElement>
 
-const SMALL_SIZE = 1080;
-const LARGE_SIZE = 1080;
+const SMALL_SIZE = 576;
+const LARGE_SIZE = 960;
 
 export default function ImageCard({
   title,

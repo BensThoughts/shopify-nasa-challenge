@@ -25,7 +25,6 @@ const Home: NextPage = () => {
 
   const today = new Date();
   const todayFormatted = format(today, DATE_FORMAT);
-  console.log(todayFormatted);
   const startDateFormatted = format(subDays(today, 10), DATE_FORMAT);
   const [lastDate, setLastDate] = useState(startDateFormatted);
 

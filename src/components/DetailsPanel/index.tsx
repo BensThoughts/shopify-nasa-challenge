@@ -18,7 +18,13 @@ export default function DetailsPanel({ details }: DetailsPanelProps) {
               } w-5 h-5 text-gray-800`}
             />
           </Disclosure.Button>
-          <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-700">
+          <Disclosure.Panel
+            style={{
+              fontSize: '.98rem',
+              lineHeight: '1.6rem'
+            }}
+            className="px-4 pt-4 pb-2 text-gray-700"
+          >
               {details}
           </Disclosure.Panel>
   

@@ -99,7 +99,10 @@ export default function ImageCard({
           />
         </ImageBlurContainer>
       </ImageModal>
+
       <div className="p-2 flex flex-col gap-3 border-solid border-2 border-gray-500 border-opacity-60 shadow-md max-w-xl bg-gray-300">
+        
+        {/* Image */}
         <div className="bg-black flex items-center">
           <button aria-label="Open image in full screen" onClick={() => setIsOpen(true)}>
             <ImageBlurContainer blur={blurSmall} className="">
@@ -116,25 +119,28 @@ export default function ImageCard({
               className="object-cover" // TODO: object-cover or object-contain, which looks better?
               />
             </ImageBlurContainer>
-
           </button>
         </div>
   
+        {/* Title, Heading, and Buttons */}
         <div className="flex justify-between items-center gap-x-4">
+
           <div className="font-bold flex flex-col md:ml-2">
             {title}
             <Date dateString={date} />
             {copyright && <div className="font-normal">Copyright: {copyright}</div>}
           </div>
+
           <div className="md:mr-2">
             <ReactionButtons url={url} date={date} hearted={hearted} bookmarked={bookmarked} />
           </div>
+
         </div>
 
+        {/* Details Panel */}
         <div>
           <DetailsPanel details={description} />
         </div>
-
       </div>
     </>
   );

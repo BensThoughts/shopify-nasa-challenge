@@ -1,17 +1,14 @@
-import { useEffect, ReactNode, ReactChildren, useState, useMemo } from 'react'
+import { useEffect, useState } from 'react'
 import type { NextPage } from 'next';
-import { format, parseISO, subDays, formatISO } from 'date-fns';
-import Head from 'next/head'
-import Image from 'next/image'
-import GridWrapper from '../components/GridWrapper'
-import ImageButton from '../components/ImageButton'
-import MaxWidthWrapper from '../components/MaxWidthWrapper'
-import styles from '../styles/Home.module.css'
-
+import { format, parseISO, subDays } from 'date-fns';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { useAppDispatch, useAppSelector } from '@app/store/hooks';
-import { fetchImagesMetadata, ImageMetadata, selectAllImageMeta } from '@app/store/imagesSlice';
-import ImageCard from '@app/components/ImageCard'
-import InfiniteScroll from 'react-infinite-scroll-component'
+
+import { fetchImagesMetadata, selectAllImageMeta } from '@app/store/imagesSlice';
+import GridWrapper from '../components/GridWrapper';
+import MaxWidthWrapper from '../components/MaxWidthWrapper';
+import ImageCard from '@app/components/ImageCard';
+import LoadingSpinner from '@app/components/LoadingSpinner';
 
 const DATE_FORMAT = 'yyyy-MM-dd';
 
@@ -44,50 +41,58 @@ const Home: NextPage = () => {
   let statusText;
 
   if (imagesStatus === 'loading') {
-    statusText = <div>Loading Images</div>
+    statusText = <p>Loading Images</p>
   } else if(imagesStatus === 'succeeded') {
-    statusText = <div>Images Loaded</div>
+    statusText = <p>Images Loaded</p>
   } else if (imagesStatus === 'failed') {
-    statusText = <div>Error: {error}</div>
+    statusText = <p>Error: {error}</p>
   }
 
   return (
     <MaxWidthWrapper>
         <div className="w-full flex flex-col items-center justify-center mb-3">
-          <h1 aria-label="app title" className="text-4xl">Spacestagram 0.2</h1>
+          <h1 aria-label="app title" className="text-4xl">Spacestagram 0.3</h1>
           <div>
             {statusText}
           </div>
         </div>
 
-        <section aria-label="Infinite scrolling list of images">
-          {imagesStatus === 'succeeded' || !firsLoad
-            ? <InfiniteScroll
-                dataLength={images.length}
-                next={fetchData}
-                hasMore={true}
-                loader={<h4>{statusText}</h4>}
-              >
-                <GridWrapper>
-                  {images.map((imgMeta) => (
-                    <ImageCard
-                      key={imgMeta.url}
-                      title={imgMeta.title}
-                      copyright={imgMeta.copyright}
-                      date={imgMeta.date}
-                      description={imgMeta.explanation}
-                      url={imgMeta.url}
-                      hdurl={imgMeta.hdurl}
-                    />
-                  ))}
-                </GridWrapper>
-                
-              </InfiniteScroll>
-            : <div>spinner</div>
-          }
-     
-
-     
+        <section
+          aria-label="Infinite scrolling list of images"
+          
+        >
+          
+            {imagesStatus === 'succeeded' || !firsLoad
+              ? (<InfiniteScroll
+                  dataLength={images.length}
+                  next={fetchData}
+                  hasMore={true}
+                  style={{ display: 'flex', width: '100%', flexDirection: 'column', alignItems: 'center' }}
+                  loader={
+                    <div className="flex flex-col align-center justify-center w-full">
+                      <LoadingSpinner size={16} style={{ alignSelf: 'center'}} />
+                      <div style={{alignSelf: 'center'}} className="">{statusText}</div>
+                    </div>
+                  }
+                >
+                  <GridWrapper>
+                    {images.map((imgMeta) => (
+                      <ImageCard
+                        key={imgMeta.url}
+                        title={imgMeta.title}
+                        copyright={imgMeta.copyright}
+                        date={imgMeta.date}
+                        description={imgMeta.explanation}
+                        url={imgMeta.url}
+                        hdurl={imgMeta.hdurl}
+                      />
+                    ))}
+                  </GridWrapper>
+                  
+                </InfiniteScroll>)
+              : <div><LoadingSpinner size={40} /></div>
+            }
+       
 
         </section>
     </MaxWidthWrapper>

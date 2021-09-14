@@ -17,7 +17,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     if (imagesStatus === 'idle') {
-      dispatch(fetchImagesMetadata());
+      dispatch(fetchImagesMetadata({start_date: '2021-02-01', end_date: '2021-02-19'}));
     }
   }, [imagesStatus, dispatch]);
 

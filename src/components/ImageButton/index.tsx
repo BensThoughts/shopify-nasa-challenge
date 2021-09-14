@@ -5,7 +5,10 @@ export default function ImageButton() {
   const dispatch = useAppDispatch();
 
   function fetchImageMeta() {
-    dispatch(fetchImagesMetadata());
+    dispatch(fetchImagesMetadata({
+      start_date: '2021-03-01',
+      end_date: '2021-03-29'
+    }));
   }
 
   return (

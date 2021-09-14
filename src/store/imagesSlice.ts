@@ -48,12 +48,17 @@ const initialState: ImageMetadataState = imagesAdapter.getInitialState({
 
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
-export const fetchImagesMetadata = createAsyncThunk('images/requestStatus', async () => {
+export const fetchImagesMetadata = createAsyncThunk(
+  'images/requestStatus',
+  async ({
+    start_date,
+    end_date
+  }: { start_date: string, end_date: string}) => {
   const response = await axios.get<ImageMetadataResponse[]>(`https://api.nasa.gov/planetary/apod`, {
     params: {
       api_key: API_KEY,
-      start_date: '2021-04-01',
-      end_date: '2021-04-20'
+      start_date: start_date,
+      end_date: end_date
     }
   });
   // const response = await fetch(`https://api.nasa.gov/planetary/apod?API_KEY=${API_KEY}`, {

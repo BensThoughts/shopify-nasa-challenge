@@ -2,6 +2,7 @@ import { Fragment, ReactNode } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import styled from '@emotion/styled';
 
+
 const ImageWrap = styled.div`
   width: screen;
   max-width: 800px;
@@ -34,10 +35,10 @@ export default function ImageModal({
             as={Fragment}
             enter="ease-out duration-300"
             enterFrom="opacity-0"
-            enterTo="opacity-80 md:opacity-40"
-            entered="opacity-80 md:opacity-40"
+            enterTo="opacity-90 md:opacity-80"
+            entered="opacity-90 md:opacity-80"
             leave="ease-in duration-200"
-            leaveFrom="opacity-80 md:opacity-40"
+            leaveFrom="opacity-90 md:opacity-80"
             leaveTo="opacity-0"
           >
             <Dialog.Overlay className="fixed inset-0 bg-black"/>
@@ -62,18 +63,22 @@ export default function ImageModal({
             className="inline-block w-full overflow-hidden text-left align-middle transition-all transform bg-black shadow-xl">
 
 
-              <div className="p-3 flex flex-col items-center w-screen">
-                <div className="">
-                  <h3
+              <div className="py-10 md:py-3 flex flex-col items-center justify-evenly w-screen">
+                {/* <div className=""> */}
+                  {/* <h3
                     className="text-lg mb-3 font-medium leading-6 text-gray-200"
                   >
                     {title}
-                  </h3>
+                  </h3> */}
                   <ImageWrap tabIndex={0}>
                     {children}
                   </ImageWrap>
+                  {/* <div className="mt-5">
+                  <p className="italic font-extralight text-gray-300">click to close</p>
+                  </div>
+                   */}
 
-                </div>
+                {/* </div> */}
 
               </div>
             </div>

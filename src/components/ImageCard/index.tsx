@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { HTMLAttributes } from 'react';
-
+import { useAppSelector } from '@app/store/hooks';
+import { selectReactionsById } from '@app/store/reactionsSlice';
 
 import Image from 'next/image';
 
-import { useAppDispatch, useAppSelector } from '@app/store/hooks';
-import { selectReactionsById } from '@app/store/reactionsSlice';
 import Date from '@app/components/Date';
 import ImageModal from '@app/components/ImageModal';
-import ReactionButtons from '../ReactionButtons';
+import ReactionButtons from '@app/components/ReactionButtons';
+import DetailsPanel from '@app/components/DetailsPanel';
 
 const shimmer = (w: number, h: number) => `
 <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -129,6 +129,10 @@ export default function ImageCard({
           <div className="md:mr-2">
             <ReactionButtons url={url} date={date} hearted={hearted} bookmarked={bookmarked} />
           </div>
+        </div>
+
+        <div>
+          <DetailsPanel details={description} />
         </div>
 
       </div>

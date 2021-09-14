@@ -112,8 +112,7 @@ export default function ImageCard({
         <div className="font-bold flex flex-col ml-2">
           {title}
           <Date dateString={date} />
-          <div className="font-normal">Copyright: {copyright}</div>
-
+          {copyright && <div className="font-normal">Copyright: {copyright}</div>}
         </div>
       </div>
     </>

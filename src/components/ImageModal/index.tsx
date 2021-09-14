@@ -34,10 +34,10 @@ export default function ImageModal({
             as={Fragment}
             enter="ease-out duration-300"
             enterFrom="opacity-0"
-            enterTo="opacity-30"
-            entered="opacity-30"
+            enterTo="opacity-90 md:opacity-40"
+            entered="opacity-90 md:opacity-40"
             leave="ease-in duration-200"
-            leaveFrom="opacity-30"
+            leaveFrom="opacity-90 md:opacity-40"
             leaveTo="opacity-0"
           >
             <Dialog.Overlay className="fixed inset-0 bg-black"/>

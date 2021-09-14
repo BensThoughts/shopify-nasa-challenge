@@ -27,18 +27,20 @@ const toBase64 = (str: string) =>
     ? Buffer.from(str).toString('base64')
     : window.btoa(str)
 
-const ImageBlur = styled(Image)<{
+const ImageBlurContainer = styled.div<{
   blur: boolean
 }>`
-  /* height: 400px; */
-  /* width: 400px; */
+  height: 100%;
+  display: flex;
+  filter: ${({ blur = true }) => blur ? 'blur(20px)' : 'none'};
+  transition: ${({ blur = true }) => blur ? 'none' : 'filter 0.2s ease-out'};
+`;
+
+const ImageContainer = styled(Image)`
   z-index: 3;
   height: 100%;
   width: 400px;
   object-fit: scale-down;
-  /* grid-area: 1 / 1 / span 3 / 1; */
-  filter: ${(props) => props.blur ? 'blur(20px)' : 'none'};
-  transition: ${(props) => props.blur ? 'none' : 'filter 0.2s ease-out'};
 `;
 
 type ImageCardProps = {
@@ -59,7 +61,8 @@ export default function ImageCard({
   description,
   ...rest
 }: ImageCardProps) {
-  const [blur, setBlur] = useState(true);
+  const [blurSmall, setBlurSmall] = useState(true);
+  const [blurFull, setBlurFull] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -70,42 +73,48 @@ export default function ImageCard({
         title={title}
         description={description}
       >
-        <Image
-          src={url}
-          alt={title}
-          width="960"
-          height="960"
-          placeholder="blur"
-          onClick={() => setIsOpen(false)}
-          
-          layout="intrinsic"
-          blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
-        />
-      </ImageModal>
-      <div className="p-2 flex flex-col border-solid border-2 border-gray-500 border-opacity-60 shadow-md max-w-xl bg-gray-300">
-        <div className="bg-black">
-          <button aria-label="Open image in full screen" onClick={() => setIsOpen(true)}>
-            <ImageBlur
+        <ImageBlurContainer blur={blurFull}>
+          <Image
             src={url}
             alt={title}
             width="960"
             height="960"
             placeholder="blur"
-            onLoad={() => setBlur(false)}
-            blur={blur}
+            onClick={() => setIsOpen(false)}
+            onLoadingComplete={() => setBlurFull(false)}
             layout="intrinsic"
             blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
-            />
+            className="object-cover"
+          />
+        </ImageBlurContainer>
+      </ImageModal>
+      <div className="p-2 flex flex-col gap-3 border-solid border-2 border-gray-500 border-opacity-60 shadow-md max-w-xl bg-gray-300">
+        <div className="bg-black flex items-center">
+          <button aria-label="Open image in full screen" onClick={() => setIsOpen(true)}>
+            <ImageBlurContainer blur={blurSmall} className="">
+              <Image
+              src={url}
+              alt={title}
+              width="960"
+              height="960"
+              placeholder="blur"
+              // onLoad={() => setBlurCSS(false)}
+              onLoadingComplete={() => setBlurSmall(false)}
+              layout="intrinsic"
+              blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
+              className="object-cover"
+              />
+            </ImageBlurContainer>
+
           </button>
         </div>
   
-        <div className="font-bold">
+        <div className="font-bold flex flex-col ml-2">
           {title}
-        </div>
-        <div className="flex">
           <Date dateString={date} />
+          <div className="font-normal">Copyright: {copyright}</div>
+
         </div>
-        <div>{copyright}</div>
       </div>
     </>
   );

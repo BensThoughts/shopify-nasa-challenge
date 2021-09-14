@@ -35,6 +35,9 @@ const ImageBlurContainer = styled.div<{
 }>`
   height: 100%;
   display: flex;
+  
+  align-items: center;
+
   filter: ${({ blur = true }) => blur ? 'blur(20px)' : 'none'};
   transition: ${({ blur = true }) => blur ? 'none' : 'filter 0.2s ease-out'};
 `;
@@ -88,14 +91,14 @@ export default function ImageCard({
           <Image
             src={url}
             alt={title}
-            width="960"
-            height="960"
+            width="800"
+            height="800"
             placeholder="blur"
             onClick={() => setIsOpen(false)}
             onLoadingComplete={() => setBlurFull(false)}
             layout="intrinsic"
-            blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
-            className="object-cover"
+            blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(800, 800))}`}
+            className="object-contain"
           />
         </ImageBlurContainer>
       </ImageModal>

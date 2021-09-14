@@ -3,9 +3,11 @@ import { Dialog, Transition } from '@headlessui/react';
 import styled from '@emotion/styled';
 
 
-const ImageWrap = styled.div`
+const ImageWrap = styled.button`
   width: screen;
-  max-width: 800px;
+  height: screen;
+  /* max-width: 800px; */
+  max-height: 800px;
 `;
 
 interface ImageModalProps {
@@ -43,12 +45,15 @@ export default function ImageModal({
           >
             <Dialog.Overlay className="fixed inset-0 bg-black"/>
           </Transition.Child>
+
+          {/* This element is to trick the browser into centering the modal contents. */}
           <span
             className="inline-block h-screen align-middle"
             aria-hidden="true"
           >
             &#8203;
           </span>
+
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -59,32 +64,19 @@ export default function ImageModal({
             leaveTo="opacity-0 scale-95"
           >
             <div
-            onClick={onClose}
-            className="inline-block w-full overflow-hidden text-left align-middle transition-all transform bg-black shadow-xl">
-
-
-              <div className="py-10 md:py-3 flex flex-col items-center justify-evenly w-screen">
-                {/* <div className=""> */}
-                  {/* <h3
-                    className="text-lg mb-3 font-medium leading-6 text-gray-200"
-                  >
-                    {title}
-                  </h3> */}
-                  <ImageWrap tabIndex={0}>
-                    {children}
-                  </ImageWrap>
-                  {/* <div className="mt-5">
-                  <p className="italic font-extralight text-gray-300">click to close</p>
-                  </div>
-                   */}
-
-                {/* </div> */}
-
-              </div>
+              onClick={onClose}
+              className="inline-block w-full overflow-hidden text-left align-middle transition-all transform bg-black shadow-xl"
+            >
+              <ImageWrap
+                aria-label="full screen image, click to dismiss"
+                className="my-5 md:my-3 flex flex-col items-center justify-items-center justify-center w-screen"
+              >
+                {children}
+              </ImageWrap>
             </div>
           </Transition.Child>
         </div>
-    </Dialog>
+      </Dialog>
     </Transition>
   );
 }

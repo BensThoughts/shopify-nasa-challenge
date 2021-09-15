@@ -11,12 +11,16 @@ const NavHiderWrapper = styled.div`
 type NavHiderProps = {
   className?: string;
   children: React.ReactNode;
-}
+} & React.HTMLAttributes<HTMLDivElement>
 
-export default function NavHider({className, children}: NavHiderProps) {
+export default function NavHider({
+  className,
+  children,
+  ...rest
+}: NavHiderProps) {
   const {scrollDirection, y} = useScrollDirection();
   return (
-    <NavHiderWrapper className={`fixed inset-0 h-14 max-h-14 ${className}`}>
+    <NavHiderWrapper className={`fixed inset-0 h-14 max-h-14 ${className}`} {...rest}>
       <Transition
         as={Fragment}
         show={scrollDirection === 'down' && y > 350 ? false : true}

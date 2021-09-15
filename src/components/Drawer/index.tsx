@@ -54,7 +54,7 @@ export default function Drawer({
                 {children}
               </div>
               <div className="self-center mt-10">
-                <Button aria-label="Close menu" onClick={() => setIsOpen(!isOpen)}>Close</Button>
+                <Button onClick={() => setIsOpen(!isOpen)}>Close</Button>
               </div>
             </div>
           </Transition.Child>

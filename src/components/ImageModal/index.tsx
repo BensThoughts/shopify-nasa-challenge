@@ -10,12 +10,14 @@ const ImageWrap = styled.div`
 `;
 
 interface ImageModalProps {
+  title: string;
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
 }
 
 export default function ImageModal({
+  title,
   isOpen = false,
   onClose,
   children,
@@ -38,7 +40,7 @@ export default function ImageModal({
             leaveFrom="opacity-75 md:opacity-75"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 bg-black"/>
+            <Dialog.Overlay title="click to close image" className="fixed inset-0 bg-black"/>
           </Transition.Child>
 
           {/* This element is to trick the browser into centering the modal contents. */}
@@ -60,10 +62,11 @@ export default function ImageModal({
           >
             <button
               onClick={onClose}
+              title="click to close image"
               className="inline-block w-full overflow-hidden text-left align-middle transition-all transform bg-black shadow-xl cursor-default"
             >
               <ImageWrap
-                aria-label="full screen image, click to dismiss"
+                aria-label={`Full screen image of ${title}`}
                 className="my-5 md:my-3 flex items-center justify-center w-full"
               >
                 {children}

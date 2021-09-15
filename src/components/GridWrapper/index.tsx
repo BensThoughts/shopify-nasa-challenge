@@ -21,17 +21,16 @@ const Wrapper = styled.div<{
 
 type GridWrapperProps = {
   charWidth?: number,
-  className?: string,
   children: ReactNode,
-}
+} & React.HTMLAttributes<HTMLDivElement>
 
 export default function GridWrapper({
   charWidth = 90,
-  className,
   children,
+  ...rest
 }: GridWrapperProps) {
   return (
-    <Wrapper charWidth={charWidth} className={className}>
+    <Wrapper charWidth={charWidth} {...rest}>
       {children}
     </Wrapper>
   );

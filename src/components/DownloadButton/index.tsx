@@ -19,6 +19,7 @@ export default function DownloadButton({
 }: DownloadButtonProps & React.AnchorHTMLAttributes<HTMLAnchorElement>) {
   return (
     <a
+      role="button"
       href={hdurl}
       title={`Download ${title}`}
       download={`${date}-${title}.jpg`}
@@ -26,7 +27,7 @@ export default function DownloadButton({
       rel="noreferrer noopener"
       {...rest}
     >
-      <AnimatedIcon>
+      <AnimatedIcon aria-label={`Download ${title}`} role="button">
         <Download className="text-primary text-opacity-70" />
       </AnimatedIcon>
     </a>

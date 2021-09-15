@@ -42,14 +42,15 @@ const AnimatedBorder = styled.div`
 type AnimatedIconProps = {
   children: React.ReactNode,
   className?: string,
-}
+} & React.HTMLAttributes<HTMLDivElement>
 
 export default function AnimatedIcon({
   children,
   className,
+  ...rest
 }: AnimatedIconProps) {
   return (
-    <AnimatedBorder className={className}>
+    <AnimatedBorder className={className} {...rest}>
       {children}
     </AnimatedBorder>
   );

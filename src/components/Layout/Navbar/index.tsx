@@ -25,9 +25,12 @@ const Nav = styled.nav`
 
 type NavBarProps = {
   className?: string;
-}
+} & React.HTMLAttributes<HTMLDivElement>
 
-export default function Navbar({className, ...rest}: NavBarProps) {
+export default function Navbar({
+  className,
+  ...rest
+}: NavBarProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -64,9 +67,9 @@ export default function Navbar({className, ...rest}: NavBarProps) {
             <IconButton
               onClick={() => setIsOpen(!isOpen)}
               className="md:hidden mr-3"
-              ariaLabel="Menu button"
+              title="Side navigation menu"
             >
-              <Menu className="text-icon-primary" />
+              <Menu aria-label="Open side navigation panel" className="text-icon-primary" />
             </IconButton>
           </div>
 

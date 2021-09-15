@@ -20,26 +20,28 @@ export default function FavoritesPage() {
 
   return (
     <MaxWidthWrapper>
-      <div className="w-full flex flex-col items-center justify-center my-5">
-        <Title aria-label="app title">Hearted Gallery</Title>
+      <section aria-label="page title" className="w-full flex flex-col items-center justify-center my-5">
+        <Title>Hearted Gallery</Title>
         <div>
           <h2 className="italic md:font-light text-base sm:text-lg md:text-xl">Your favorites!</h2>
         </div>
-      </div>
+      </section>
       <GridWrapper>
-        {heartedImages && heartedImages.length > 0 ?
-          <div className="flex gap-3 flex-wrap items-center justify-center mb-5">
-            {heartedImages.map((img) => (
-              <SmallImageCard key={img.url} title={img.title} date={img.date} url={img.url} hdurl={img.hdurl} />
-            ))}
-          </div> :
-          <div className="text-center w-full">
-            <p>Looks like you don&apos;t have any favorites.</p>
-            <p>
-                Try clicking the&nbsp;<Heart style={{color: 'rgba(127, 29, 29, 0.7)', display: 'inline'}} />&nbsp;icon.
-            </p>
-          </div>
-        }
+        <section aria-label="a gallery of your favorite images">
+          {heartedImages && heartedImages.length > 0 ?
+            <div className="flex gap-3 flex-wrap items-center justify-center mb-5">
+              {heartedImages.map((img) => (
+                <SmallImageCard key={img.url} title={img.title} date={img.date} url={img.url} hdurl={img.hdurl} />
+              ))}
+            </div> :
+            <div className="text-center w-full">
+              <p>Looks like you don&apos;t have any favorites.</p>
+              <p>
+                  Try clicking the&nbsp;<Heart style={{color: 'rgba(127, 29, 29, 0.7)', display: 'inline'}} />&nbsp;icon.
+              </p>
+            </div>
+          }
+        </section>
       </GridWrapper>
     </MaxWidthWrapper>
   );

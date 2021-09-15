@@ -70,6 +70,7 @@ export default function ImageCard({
   return (
     <>
       <ImageModal
+        title={title}
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
       >
@@ -89,7 +90,10 @@ export default function ImageCard({
         </ImageBlurContainer>
       </ImageModal>
 
-      <CardContainer className="p-2 flex flex-col gap-3 border-solid border-2 border-gray-500 border-opacity-60 shadow-md max-w-xs bg-app-bg-secondary">
+      <CardContainer
+        className="p-2 flex flex-col gap-3 border-solid border-2 border-secondary border-opacity-60 shadow-md max-w-xs bg-app-bg-secondary"
+        {...rest}
+      >
 
         {/* Image */}
         <div className="bg-black flex items-center">
@@ -102,7 +106,6 @@ export default function ImageCard({
                 width={SMALL_SIZE}
                 height={SMALL_SIZE}
                 placeholder="blur"
-                // onLoad={() => setBlurCSS(false)}
                 onLoadingComplete={() => setBlurSmall(false)}
                 layout="intrinsic"
                 blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(SMALL_SIZE, SMALL_SIZE))}`}

@@ -17,6 +17,8 @@ export default function DateComponent({
 }: DateProps & React.TimeHTMLAttributes<HTMLTimeElement>) {
   const date = parseISO(dateString);
   return (
-    <Time dateTime={dateString} {...rest}>{format(date, 'LLLL d, yyyy')}</Time>
+    <Time dateTime={dateString} {...rest}>
+      {format(date, 'LLLL d, yyyy')}
+    </Time>
   );
 };

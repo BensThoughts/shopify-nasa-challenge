@@ -51,16 +51,13 @@ const Home: NextPage = () => {
 
   return (
     <MaxWidthWrapper>
-      <div className="w-full flex flex-col items-center justify-center my-5">
-        <Title aria-label="app title">Spacestagram</Title>
-        <div>
-          <h2 className="italic md:font-light text-base sm:text-lg md:text-xl">The final frontier</h2>
-        </div>
-      </div>
+      <section aria-label="page title" className="w-full flex flex-col items-center justify-center my-5">
+        <Title>Spacestagram</Title>
+        <h2 className="italic md:font-light text-base sm:text-lg md:text-xl">The final frontier</h2>
+      </section>
 
       <section
         aria-label="Infinite scrolling list of images"
-
       >
         {imagesStatus === 'succeeded' || !firsLoad ?
               (<InfiniteScroll

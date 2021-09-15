@@ -30,30 +30,24 @@ const A = styled.a`
 
 type AProps = {
   children: React.ReactNode;
-  href?: string;
-  target?: string;
-  rel?: string;
   className?: string;
   onClick?: MouseEventHandler<HTMLAnchorElement>
-}
+} & React.AnchorHTMLAttributes<HTMLAnchorElement>
 
 const AnimatedLink = forwardRef<HTMLAnchorElement, AProps>(({
-  href = '',
-  target = '',
-  rel = '',
   children,
   className = '',
   onClick,
+  ...rest
 }, ref) => {
   return (
     <A
       ref={ref}
-      href={href}
       className={className}
-      target={target}
-      rel={rel}
-      onClick={onClick}
-    >{children}</A>
+      {...rest}
+    >
+      {children}
+    </A>
   );
 });
 

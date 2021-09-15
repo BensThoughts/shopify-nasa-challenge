@@ -14,14 +14,15 @@ module.exports = {
         'press-start': ['"Press Start 2P"', 'cursive']
       },
       backgroundColor: {
-        'app-bg': generateColorClass('color-bg-primary'),
+        'app-bg-primary': generateColorClass('color-bg-primary'),
+        'app-bg-secondary': generateColorClass('color-bg-secondary'),
         'primary': generateColorClass('color-app-primary'),
         'secondary': generateColorClass('color-app-secondary'),
         'accent': generateColorClass('color-app-accent'),
-        'terminal': generateColorClass('color-bg-terminal'),
       },
       textColor: {
         'primary': generateColorClass('color-text-primary'),
+        'primary-dark': generateColorClass('color-text-primary-dark'),
         'secondary': generateColorClass('color-text-secondary'),
         'icon-primary': generateColorClass('color-app-primary'),
         'icon-secondary': generateColorClass('color-app-secondary'),

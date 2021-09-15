@@ -10,7 +10,7 @@ export default function DetailsPanel({ details }: DetailsPanelProps) {
     <Disclosure>
       {({ open }) => (
         <>
-          <Disclosure.Button className="flex justify-between w-full px-4 py-2 text-sm font-medium text-left text-gray-700 bg-gray-400 bg-opacity-50 hover:bg-opacity-70 ">
+          <Disclosure.Button className="flex justify-between w-full px-4 py-2 text-sm font-medium text-left text-primary bg-gray-400 bg-opacity-50 hover:bg-opacity-70 ">
             <span>View Details</span>
             <ChevronUp 
               className={`${
@@ -23,7 +23,7 @@ export default function DetailsPanel({ details }: DetailsPanelProps) {
               fontSize: '.98rem',
               lineHeight: '1.6rem'
             }}
-            className="px-4 pt-4 pb-2 text-gray-700"
+            className="px-4 pt-4 pb-2 text-primary"
           >
               {details}
           </Disclosure.Panel>

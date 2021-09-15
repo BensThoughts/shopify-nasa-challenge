@@ -29,17 +29,17 @@ export default function ImageModal({
       <Dialog
         as="div"
         onClose={onClose}
-        className="fixed inset-0 z-10 overflow-y-auto"
+        className="fixed inset-0 z-50 overflow-y-auto"
       >
         <div className="text-center">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
             enterFrom="opacity-0"
-            enterTo="opacity-90 md:opacity-80"
-            entered="opacity-90 md:opacity-80"
+            enterTo="opacity-75 md:opacity-75"
+            entered="opacity-75 md:opacity-75"
             leave="ease-in duration-200"
-            leaveFrom="opacity-90 md:opacity-80"
+            leaveFrom="opacity-75 md:opacity-75"
             leaveTo="opacity-0"
           >
             <Dialog.Overlay className="fixed inset-0 bg-black"/>

@@ -24,16 +24,16 @@ const Nav = styled.nav`
   will-change: background, color;
 `;
 
-const NavLinks = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: end;
-  align-content: space-between;
-  padding-top: 0px;
-  background: var(--color-app-primary);
-  /* transition: background 0.25s ease-in-out;
-  will-change: background; */
-`;
+// const NavLinks = styled.div`
+//   display: flex;
+//   align-items: center;
+//   justify-content: end;
+//   align-content: space-between;
+//   padding-top: 0px;
+//   background: var(--color-app-primary);
+//   /* transition: background 0.25s ease-in-out;
+//   will-change: background; */
+// `;
 
 type NavBarProps = {
   className?: string;
@@ -45,14 +45,32 @@ export default function Navbar({ className, ...rest }: NavBarProps) {
   return (
     <>
       <Drawer isOpen={isOpen} setIsOpen={setIsOpen} title="Menu" description="Try something new!">
-          <NavLinks className="flex flex-col items-center justify-end content-between pt-0 w-full">
-            <MenuItem href="/" onClick={() => setIsOpen(false)} className="hover:bg-gray-800 w-full h-10 flex items-center justify-center text-xl mt-7">Home</MenuItem>
-            <MenuItem href="/favorites" onClick={() => setIsOpen(false)} className="hover:bg-gray-800 w-full h-10 flex items-center justify-center text-xl">Favorites</MenuItem>
-            <MenuItem href="/contact" onClick={() => setIsOpen(false)} className="hover:bg-gray-800 w-full h-10 flex items-center justify-center text-xl">Contact</MenuItem>
-          </NavLinks>
+          <div className="flex flex-col items-center justify-end content-between pt-0 w-full">
+            <MenuItem
+              href="/"
+              onClick={() => setIsOpen(false)}
+              className="hover:bg-secondary text-primary-dark w-full h-10 flex items-center justify-center text-xl mt-7"
+            >
+              Home
+            </MenuItem>
+            <MenuItem
+              href="/favorites"
+              onClick={() => setIsOpen(false)}
+              className="hover:bg-secondary text-primary-dark w-full h-10 flex items-center justify-center text-xl"
+            >
+              Favorites
+            </MenuItem>
+            <MenuItem
+              href="/contact"
+              onClick={() => setIsOpen(false)}
+              className="hover:bg-secondary text-primary-dark w-full h-10 flex items-center justify-center text-xl"
+            >
+              Contact
+            </MenuItem>
+          </div>
       </Drawer>
       <NavHider>
-        <Nav {...rest} className={`bg-primary shadow-lg ${className}`}>
+        <Nav {...rest} className={`bg-primary bg-opacity-70 shadow-lg ${className}`}>
           {/* Small- Screens */}  
           <div className="flex md:hidden w-full justify-start items-center mx-3">
             <IconButton
@@ -65,12 +83,12 @@ export default function Navbar({ className, ...rest }: NavBarProps) {
           </div>
   
           {/* Medium+ Screens */}  
-          <div className="hidden md:flex md:justify-between md:items-center md:w-full md:pt-0 md:mr-3">
-            <NavLinks className="flex items-center justify-end content-between">
+          <div className="hidden md:flex md:justify-end md:items-center md:w-full md:pt-0 md:mr-3">
+            {/* <NavLinks className="flex items-center justify-center content-between"> */}
               <MenuItem animatedLink href="/" className="mx-4">Home</MenuItem>
               <MenuItem animatedLink href="/favorites" className="mx-4">Favorites</MenuItem>
               <MenuItem animatedLink href="/contact" className="mx-4">Contact</MenuItem>
-            </NavLinks>
+            {/* </NavLinks> */}
           </div>
         </Nav>        
       </NavHider>

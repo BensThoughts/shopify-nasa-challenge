@@ -25,7 +25,7 @@ const MenuItem = ({
               {children}
             </AnimatedLink>
 
-        : <a href={href} onClick={onClick} className={`text-primary ${className}`}>
+        : <a href={href} onClick={onClick} className={className}>
             {children}
           </a>
       }

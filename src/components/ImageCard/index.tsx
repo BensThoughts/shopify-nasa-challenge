@@ -100,7 +100,7 @@ export default function ImageCard({
         </ImageBlurContainer>
       </ImageModal>
 
-      <div className="p-2 flex flex-col gap-3 border-solid border-2 border-gray-500 border-opacity-60 shadow-md max-w-xl bg-gray-300">
+      <div className="p-2 flex flex-col gap-3 border-solid border-2 border-gray-500 border-opacity-60 shadow-md max-w-xl bg-app-bg-secondary">
         
         {/* Image */}
         <div className="bg-black flex items-center">

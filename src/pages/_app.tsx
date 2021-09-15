@@ -12,8 +12,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persister}>
-        <Navbar />
-        <Component {...pageProps} />
+        <Navbar className="h-14" />
+        <div className="pt-14">
+          <Component {...pageProps} />
+        </div>
       </PersistGate>
     </Provider>
   );

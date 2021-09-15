@@ -137,6 +137,7 @@ const imagesSlice = createSlice({
 export const {
   selectAll: selectAllImageMeta,
   selectById: selectImageMetaById,
+  selectEntities: selectImageMetaEntities,
   selectIds: selectImageMetaIds
 } = imagesAdapter.getSelectors((state: RootState) => state.images);
 

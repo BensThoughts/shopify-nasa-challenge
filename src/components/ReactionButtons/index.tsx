@@ -23,8 +23,8 @@ export default function ReactionButtons({
     dispatch(upsertReaction({
       url: url,
       date: date,
-      heart: !hearted,
-      bookmark: bookmarked
+      hearted: !hearted,
+      bookmarked: bookmarked
     }));
   };
 
@@ -32,8 +32,8 @@ export default function ReactionButtons({
     dispatch(upsertReaction({
       url: url,
       date: date,
-      heart: hearted,
-      bookmark: !bookmarked
+      hearted: hearted,
+      bookmarked: !bookmarked
     }));
   }
 

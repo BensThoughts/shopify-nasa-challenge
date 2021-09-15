@@ -9,7 +9,7 @@ import {
 
 import { RootState } from '@app/store/store';
 
-type ReactionEmoji = 'heart' | 'bookmark';
+type ReactionEmoji = 'hearted' | 'bookmarked';
 
 type ReactionEmojis = {
   [key in ReactionEmoji]: boolean
@@ -37,18 +37,18 @@ const reactionsSlice = createSlice({
   reducers: {
     upsertReaction(state, action: PayloadAction<{
       url: string,
-      heart: boolean,
-      bookmark: boolean,
+      hearted: boolean,
+      bookmarked: boolean,
       date: string
     }>) {
-      const { url, heart, bookmark, date } = action.payload;
+      const { url, hearted, bookmarked, date } = action.payload;
       const newReaction: Reaction = {
         // id: url,
         url: url,
         date: date,
         reactions: {
-          heart: heart,
-          bookmark: bookmark
+          hearted: hearted,
+          bookmarked: bookmarked
         }
       }
       reactionsAdapter.upsertOne(state, newReaction);

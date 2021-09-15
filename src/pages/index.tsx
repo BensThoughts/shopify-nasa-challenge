@@ -3,6 +3,7 @@ import type { NextPage } from 'next';
 import { format, parseISO, subDays } from 'date-fns';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useAppDispatch, useAppSelector } from '@app/store/hooks';
+import styled from '@emotion/styled';
 
 import { fetchImagesMetadata, selectAllImageMeta } from '@app/store/imagesSlice';
 import GridWrapper from '../components/GridWrapper';
@@ -11,6 +12,20 @@ import ImageCard from '@app/components/ImageCard';
 import LoadingSpinner from '@app/components/LoadingSpinner';
 
 const DATE_FORMAT = 'yyyy-MM-dd';
+
+const Title = styled.h1`
+  font-family: 'EdgeOfGalaxy';
+  letter-spacing: .2em;
+  font-size: 2rem;
+  @media (min-width: 640px) {
+    font-size: 3rem;
+    line-height: 3.5rem;
+  }
+  @media (min-width: 768px) {
+    font-size: 4rem;
+    line-height: 4.5rem;
+  }
+`;
 
 const Home: NextPage = () => {
   const dispatch = useAppDispatch();
@@ -50,10 +65,10 @@ const Home: NextPage = () => {
 
   return (
     <MaxWidthWrapper>
-        <div className="w-full flex flex-col items-center justify-center mb-3">
-          <h1 aria-label="app title" className="text-4xl">Spacestagram 0.3</h1>
+        <div className="w-full flex flex-col items-center justify-center my-3">
+          <Title aria-label="app title">Spacestagram</Title>
           <div>
-            {statusText}
+            <h2 className="italic md:font-light text-base sm:text-lg md:text-xl">The final frontier</h2>
           </div>
         </div>
 

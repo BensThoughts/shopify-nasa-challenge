@@ -10,7 +10,7 @@ const Time = styled.time`
   font-weight: 100;
 `;
 
-export default function Date({ dateString }: DateProps) {
+export default function DateComponent({ dateString }: DateProps) {
   const date = parseISO(dateString);
   return (
     <Time dateTime={dateString}>{format(date, 'LLLL d, yyyy')}</Time>

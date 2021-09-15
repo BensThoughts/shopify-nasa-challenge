@@ -8,31 +8,24 @@ import SmallImageCard from '@app/components/ImageCardSmall';
 
 export default function FavoritesPage() {
   const reactions = useAppSelector(selectAllReactions)
-
-  // let heartedImages;
-
-  // if (reactions) {
-
-  //   const hearted = reactions.filter((img) => {
-  //     return img.reactions.hearted;
-  //   });
-
-  //   if (hearted.length > 0) {
-  //     heartedImages = hearted.map((img) => {
-  //       return images[img.url]
-  //     });
-  //   }
-  // }
+ 
+   let heartedImages;
+ 
+   if (reactions) {
+     heartedImages = reactions.filter((img) => {
+       return img.reactions.hearted;
+     });
+   }
 
   return (
     <MaxWidthWrapper>
     <GridWrapper>
       <h1>Hearted Images</h1>
-        {reactions
+        {heartedImages
           ?
             <div className="flex gap-3 flex-wrap items-center justify-center">
-              {reactions.map((img) => (
-                 <SmallImageCard key={img!.url} title={img!.title} date={img!.date} url={img!.url} hdurl={img!.hdurl} />
+              {heartedImages.map((img) => (
+                 <SmallImageCard key={img.url} title={img.title} date={img.date} url={img.url} hdurl={img.hdurl} />
               ))}
             </div>
           : <div className="w-full h-full flex items-center justify-center"><p>Looks like you don&apos;t have any favorites yet</p></div>

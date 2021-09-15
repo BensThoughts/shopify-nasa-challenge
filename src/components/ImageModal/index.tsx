@@ -10,16 +10,12 @@ const ImageWrap = styled.button`
 `;
 
 interface ImageModalProps {
-  title: string;
-  description?: string;
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
 }
 
 export default function ImageModal({
-  title,
-  description,
   isOpen = false,
   onClose,
   children

@@ -1,8 +1,6 @@
 import styled from '@emotion/styled';
 
-const AnimatedBorder = styled.div<{
-  activated: boolean
-}>`
+const AnimatedBorder = styled.div`
   --app-border-opacity: 0.8;
   position: relative;
   padding: 8px;
@@ -44,16 +42,14 @@ const AnimatedBorder = styled.div<{
 type AnimatedIconProps = {
   children: React.ReactNode,
   className?: string,
-  activated: boolean,
 }
 
 export default function AnimatedIcon({
   children,
   className,
-  activated
 }: AnimatedIconProps) {
   return (
-      <AnimatedBorder activated={activated} className={className}>
+      <AnimatedBorder className={className}>
         {children}
       </AnimatedBorder>
   );

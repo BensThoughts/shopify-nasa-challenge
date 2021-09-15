@@ -1,46 +1,40 @@
 import { useAppDispatch } from '@app/store/hooks';
 import { upsertReaction } from '@app/store/reactionsSlice';
-import { Heart, Bookmark } from 'react-feather';
+import { Heart } from 'react-feather';
 
 import AnimatedIcon from '../AnimatedIcon';
 
-interface ReactionButtonProps {
+interface HeartButtonProps {
   url: string;
+  hdurl: string;
+  title: string;
   date: string;
-  bookmarked: boolean;
   hearted: boolean;
 }
 
-export default function ReactionButtons({
+export default function HeartButtons({
   url,
+  hdurl,
+  title,
   date,
-  bookmarked = false,
   hearted = false
-}: ReactionButtonProps) {
+}: HeartButtonProps) {
   const dispatch = useAppDispatch();
-  
+
   function setHeart() {
     dispatch(upsertReaction({
       url: url,
+      hdurl: hdurl,
+      title: title,
       date: date,
       hearted: !hearted,
-      bookmarked: bookmarked
     }));
   };
-
-  function setBookmark() {
-    dispatch(upsertReaction({
-      url: url,
-      date: date,
-      hearted: hearted,
-      bookmarked: !bookmarked
-    }));
-  }
 
   return (
     <div className="flex gap-x-2 md:gap-x-4">
       <button onClick={setHeart}>
-        <AnimatedIcon activated={hearted}>
+        <AnimatedIcon>
             <Heart
               style={{
                 color: 'rgba(127, 29, 29, 0.7)',
@@ -51,18 +45,6 @@ export default function ReactionButtons({
             />
         </AnimatedIcon>
       </button>
-      <button onClick={setBookmark}>
-        <AnimatedIcon activated={bookmarked}>
-            <Bookmark
-              style={{
-                color: 'rgba(0, 0, 0, 0.7)',
-                fill: 'rgb(17, 24, 39)',
-                fillOpacity: bookmarked ? 1 : 0,
-                transition: 'fill-opacity 150ms linear'
-              }}
-            />
-        </AnimatedIcon>
-      </button>  
     </div>
   );
 }

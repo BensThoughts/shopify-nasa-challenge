@@ -8,7 +8,7 @@ import { format } from 'date-fns';
 import Image from 'next/image';
 import DateComponent from '@app/components/DateComponent';
 import ImageModal from '@app/components/ImageModal';
-import ReactionButtons from '@app/components/ReactionButtons';
+import ReactionButtons from '@app/components/HeartButton';
 import DetailsPanel from '@app/components/DetailsPanel';
 import { selectImageMetaById } from '@app/store/imagesSlice';
 
@@ -55,9 +55,7 @@ const CardContainer = styled.div`
 
 type ImageCardProps = {
   title: string;
-  copyright?: string;
   date: string;
-  description: string;
   url: string;
   hdurl: string;
 } & HTMLAttributes<HTMLDivElement>
@@ -68,11 +66,9 @@ const DATE_FORMAT = 'yyyy-MM-dd';
 
 export default function ImageCard({
   title,
-  copyright,
   date,
   url,
   hdurl,
-  description,
   ...rest
 }: ImageCardProps) {
   const [blurSmall, setBlurSmall] = useState(true);
@@ -80,11 +76,9 @@ export default function ImageCard({
   const [isOpen, setIsOpen] = useState(false);
   const reaction = useAppSelector(state => selectReactionsById(state, url));
 
-  let bookmarked = false;
   let hearted = false;
 
   if (reaction) {
-    bookmarked = reaction.reactions.bookmarked;
     hearted = reaction.reactions.hearted;
   }
 
@@ -93,8 +87,6 @@ export default function ImageCard({
       <ImageModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        title={title}
-        description={description}
       >
         <ImageBlurContainer blur={blurFull}>
           <Image

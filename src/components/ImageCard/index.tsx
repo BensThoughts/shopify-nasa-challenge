@@ -8,7 +8,8 @@ import { format } from 'date-fns';
 import Image from 'next/image';
 import DateComponent from '@app/components/DateComponent';
 import ImageModal from '@app/components/ImageModal';
-import ReactionButtons from '@app/components/ReactionButtons';
+import HeartButton from '@app/components/HeartButton';
+import DownloadButton from '@app/components/DownloadButton';
 import DetailsPanel from '@app/components/DetailsPanel';
 import { selectImageMetaById } from '@app/store/imagesSlice';
 
@@ -75,7 +76,6 @@ export default function ImageCard({
   let hearted = false;
 
   if (reaction) {
-    bookmarked = reaction.reactions.bookmarked;
     hearted = reaction.reactions.hearted;
   }
 
@@ -84,8 +84,6 @@ export default function ImageCard({
       <ImageModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        title={title}
-        description={description}
       >
         <ImageBlurContainer blur={blurFull}>
           <Image
@@ -134,8 +132,15 @@ export default function ImageCard({
             {copyright && <div className="font-normal">Copyright: {copyright}</div>}
           </div>
 
-          <div className="md:mr-2">
-            <ReactionButtons url={url} date={date} hearted={hearted} bookmarked={bookmarked} />
+          <div className="md:mr-2 flex gap-x-2 md:gap-x-4">
+            <HeartButton
+              url={url}
+              hdurl={hdurl}
+              title={title}
+              date={date}
+              hearted={hearted}
+            />
+            <DownloadButton url={url} hdurl={hdurl} title={title} date={date} />
           </div>
 
         </div>

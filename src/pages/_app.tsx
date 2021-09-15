@@ -1,18 +1,17 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import { persistStore } from 'redux-persist';
-import { DefaultSeo } from 'next-seo';
-import { store } from '@app/store/store';
-let persister = persistStore(store);
+import '../styles/globals.css';
+import type {AppProps} from 'next/app';
+import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/integration/react';
+import {persistStore} from 'redux-persist';
+import {DefaultSeo} from 'next-seo';
+import {store} from '@app/store/store';
+const persister = persistStore(store);
 
 import NextSeoConfig from '@app/next-seo.config';
 import Navbar from '@app/components/Layout/Navbar';
 
 
-
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({Component, pageProps}: AppProps) {
   return (
     <>
       <DefaultSeo {...NextSeoConfig} />
@@ -27,4 +26,4 @@ function MyApp({ Component, pageProps }: AppProps) {
     </>
   );
 }
-export default MyApp
+export default MyApp;

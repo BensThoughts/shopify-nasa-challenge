@@ -1,4 +1,4 @@
-import { MouseEventHandler, ReactNode } from 'react';
+import {MouseEventHandler, ReactNode} from 'react';
 import Link from 'next/link';
 import AnimatedLink from '@app/components/AnimatedLink';
 
@@ -20,14 +20,14 @@ const MenuItem = ({
 }: MenuItemsProps) => {
   return (
     <Link passHref href={href} {...rest} scroll={false}>
-      {animatedLink
-        ?   <AnimatedLink href={href} className={className}>
-              {children}
-            </AnimatedLink>
+      {animatedLink ?
+        <AnimatedLink href={href} className={className}>
+          {children}
+        </AnimatedLink> :
 
-        : <a href={href} onClick={onClick} className={className}>
-            {children}
-          </a>
+        <a href={href} onClick={onClick} className={className}>
+          {children}
+        </a>
       }
     </Link>
   );

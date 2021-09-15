@@ -1,5 +1,5 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import { combineReducers } from 'redux';
+import {configureStore, ThunkAction, Action} from '@reduxjs/toolkit';
+import {combineReducers} from 'redux';
 import {
   // persistStore,
   persistReducer,
@@ -17,15 +17,15 @@ const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  blacklist: ['images']
-}
+  blacklist: ['images'],
+};
 
 import imagesReducer from '@app/store/imagesSlice';
 import reactionsReducer from '@app/store/reactionsSlice';
 
 const rootReducer = combineReducers({
   images: imagesReducer,
-  reactions: reactionsReducer
+  reactions: reactionsReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -34,12 +34,10 @@ export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
     serializableCheck: {
-      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-    }
-  })
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    },
+  }),
 });
-
-
 
 
 export type AppDispatch = typeof store.dispatch;

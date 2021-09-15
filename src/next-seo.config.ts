@@ -1,4 +1,4 @@
-const NextSeoConfig =  {
+const NextSeoConfig = {
   title: 'Shopify Nasa Challenge',
   description: 'An Instagram clone showing beautiful photos from the NASA APOD API',
   openGraph: {
@@ -12,14 +12,14 @@ const NextSeoConfig =  {
       url: 'https://res.cloudinary.com/bensthoughts/image/upload/v1631670713/shopify-nasa-challenge/og-image_v6enq5.jpg',
       width: 1200,
       height: 627,
-      alt: 'Astronaut in space with earth background'
-    }]
+      alt: 'Astronaut in space with earth background',
+    }],
   },
   twitter: {
     handle: '@BensThoughts',
     site: '@BensThoughts',
-    cardType: 'summary_large_image'
-  }
-}
+    cardType: 'summary_large_image',
+  },
+};
 
 export default NextSeoConfig;

@@ -4,9 +4,9 @@ import MaxWidthWrapper from '@app/components/MaxWidthWrapper';
 export default function ContactPage() {
   return (
     <MaxWidthWrapper>
-    <GridWrapper>
+      <GridWrapper>
       Placeholder
-    </GridWrapper>
+      </GridWrapper>
     </MaxWidthWrapper>
 
   );

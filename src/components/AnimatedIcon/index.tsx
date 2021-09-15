@@ -49,8 +49,8 @@ export default function AnimatedIcon({
   className,
 }: AnimatedIconProps) {
   return (
-      <AnimatedBorder className={className}>
-        {children}
-      </AnimatedBorder>
+    <AnimatedBorder className={className}>
+      {children}
+    </AnimatedBorder>
   );
 }

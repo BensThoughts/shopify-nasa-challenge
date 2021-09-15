@@ -1,4 +1,4 @@
-import { forwardRef, MouseEventHandler } from 'react';
+import {forwardRef, MouseEventHandler} from 'react';
 import styled from '@emotion/styled';
 
 const A = styled.a`
@@ -47,11 +47,11 @@ const AnimatedLink = forwardRef<HTMLAnchorElement, AProps>(({
 }, ref) => {
   return (
     <A
+      ref={ref}
       href={href}
-      className={`${className}`}
+      className={className}
       target={target}
       rel={rel}
-      ref={ref}
       onClick={onClick}
     >{children}</A>
   );

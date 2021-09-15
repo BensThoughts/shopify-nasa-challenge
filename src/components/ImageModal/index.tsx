@@ -1,8 +1,8 @@
-import { Fragment, ReactNode } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
+import {Fragment, ReactNode} from 'react';
+import {Dialog, Transition} from '@headlessui/react';
 import styled from '@emotion/styled';
 
-const ImageWrap = styled.button`
+const ImageWrap = styled.div`
   width: screen;
   height: screen;
   /* max-width: 800px; */
@@ -18,14 +18,14 @@ interface ImageModalProps {
 export default function ImageModal({
   isOpen = false,
   onClose,
-  children
+  children,
 }: ImageModalProps) {
   return (
     <Transition show={isOpen} as={Fragment}>
       <Dialog
         as="div"
         onClose={onClose}
-        className="fixed inset-0 z-50 overflow-y-auto"
+        className="fixed inset-0 z-50 overflow-y-auto cursor-default"
       >
         <div className="text-center">
           <Transition.Child
@@ -58,17 +58,17 @@ export default function ImageModal({
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <div
+            <button
               onClick={onClose}
-              className="inline-block w-full overflow-hidden text-left align-middle transition-all transform bg-black shadow-xl"
+              className="inline-block w-full overflow-hidden text-left align-middle transition-all transform bg-black shadow-xl cursor-default"
             >
               <ImageWrap
                 aria-label="full screen image, click to dismiss"
-                className="my-5 md:my-3 flex flex-col items-center justify-items-center justify-center w-screen"
+                className="my-5 md:my-3 flex items-center justify-center w-full"
               >
                 {children}
               </ImageWrap>
-            </div>
+            </button>
           </Transition.Child>
         </div>
       </Dialog>

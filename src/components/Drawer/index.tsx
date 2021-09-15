@@ -1,13 +1,13 @@
-import { Fragment } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
+import {Fragment} from 'react';
+import {Dialog, Transition} from '@headlessui/react';
 import Button from '@app/components/Button';
 
 type DrawerProps = {
   title?: string,
   description?: string,
   children: React.ReactNode,
-	isOpen: boolean
-	setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+  isOpen: boolean
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function Drawer({
@@ -15,7 +15,7 @@ export default function Drawer({
   description = '',
   children,
   isOpen,
-  setIsOpen
+  setIsOpen,
 }: DrawerProps) {
   return (
     <Transition show={isOpen} as={Fragment}>
@@ -48,18 +48,18 @@ export default function Drawer({
             leaveTo="-translate-x-full"
           >
             <div className="flex flex-col justify-between bg-primary z-50 w-full max-w-sm p-6 overflow-hidden text-left align-middle shadow-xl rounded-r-sm">
-                <div>
-                  <Dialog.Title className="font-bold text-2xl md:text-4xl text-secondary">{title}</Dialog.Title>
-                  <Dialog.Description>{description}</Dialog.Description>
-                  {children}
-                </div>
-                <div className="self-center mt-10">
-                  <Button ariaLabel="Close menu" onClick={() => setIsOpen(!isOpen)}>Close</Button>
-                </div>
+              <div>
+                <Dialog.Title className="font-bold text-2xl md:text-4xl text-secondary">{title}</Dialog.Title>
+                <Dialog.Description>{description}</Dialog.Description>
+                {children}
+              </div>
+              <div className="self-center mt-10">
+                <Button aria-label="Close menu" onClick={() => setIsOpen(!isOpen)}>Close</Button>
+              </div>
             </div>
           </Transition.Child>
         </div>
       </Dialog>
-    </Transition>    
+    </Transition>
   );
 }

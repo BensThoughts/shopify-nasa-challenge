@@ -1,18 +1,14 @@
-import { 
+import {
   createSlice,
-  createAsyncThunk,
   PayloadAction,
-  createSelector,
   createEntityAdapter,
-  EntityState
+  EntityState,
 } from '@reduxjs/toolkit';
 
-import { RootState } from '@app/store/store';
-
-type ReactionEmoji = 'hearted';
+import {RootState} from '@app/store/store';
 
 type ReactionEmojis = {
-  [key in ReactionEmoji]: boolean
+  hearted: boolean
 }
 
 export interface Reaction {
@@ -28,7 +24,7 @@ interface ReactionsState extends EntityState<Reaction>{};
 
 const reactionsAdapter = createEntityAdapter<Reaction>({
   selectId: (reaction) => reaction.url,
-  sortComparer: (a, b) => b.date.localeCompare(a.date)
+  sortComparer: (a, b) => b.date.localeCompare(a.date),
 });
 
 const initialState: ReactionsState = reactionsAdapter.getInitialState({});
@@ -44,7 +40,7 @@ const reactionsSlice = createSlice({
       date: string,
       hearted: boolean
     }>) {
-      const { url, hdurl, title, date, hearted, } = action.payload;
+      const {url, hdurl, title, date, hearted} = action.payload;
       const newReaction: Reaction = {
         // id: url,
         url: url,
@@ -53,27 +49,15 @@ const reactionsSlice = createSlice({
         date: date,
         reactions: {
           hearted: hearted,
-        }
-      }
+        },
+      };
       reactionsAdapter.upsertOne(state, newReaction);
     },
-    setReaction(state, action: PayloadAction<{
-      reactionId: string,
-      reaction: ReactionEmoji,
-    }>) {
-      const { reactionId, reaction } = action.payload;
-      const existingReaction = state.entities[reactionId];
-      if (existingReaction) {
-        const currentReaction = existingReaction.reactions[reaction];
-        existingReaction.reactions[reaction] = !currentReaction;
-      } 
-    },
-  }
+  },
 });
 
 export const {
   upsertReaction,
-  setReaction,
 } = reactionsSlice.actions;
 
 export const {

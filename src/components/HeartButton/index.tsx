@@ -1,6 +1,6 @@
-import { useAppDispatch } from '@app/store/hooks';
-import { upsertReaction } from '@app/store/reactionsSlice';
-import { Heart } from 'react-feather';
+import {useAppDispatch} from '@app/store/hooks';
+import {upsertReaction} from '@app/store/reactionsSlice';
+import {Heart} from 'react-feather';
 
 import AnimatedIcon from '../AnimatedIcon';
 
@@ -17,7 +17,7 @@ export default function HeartButtons({
   hdurl,
   title,
   date,
-  hearted = false
+  hearted = false,
 }: HeartButtonProps) {
   const dispatch = useAppDispatch();
 
@@ -35,14 +35,14 @@ export default function HeartButtons({
     <div className="flex gap-x-2 md:gap-x-4">
       <button onClick={setHeart} title={`Add ${title} to favorites`}>
         <AnimatedIcon>
-            <Heart
-              style={{
-                color: 'rgba(153, 27, 27, 0.7)',
-                fill: 'rgb(153, 27, 27)',
-                fillOpacity: hearted ? 1 : 0,
-                transition: 'fill-opacity 150ms linear'
-              }}
-            />
+          <Heart
+            style={{
+              color: 'rgba(153, 27, 27, 0.7)',
+              fill: 'rgb(153, 27, 27)',
+              fillOpacity: hearted ? 1 : 0,
+              transition: 'fill-opacity 150ms linear',
+            }}
+          />
         </AnimatedIcon>
       </button>
     </div>

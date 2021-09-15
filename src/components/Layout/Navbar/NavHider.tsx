@@ -1,8 +1,6 @@
-import { useEffect, useState } from 'react';
-import { useWindowScroll } from 'react-use';
-import { Fragment } from 'react';
+import {Fragment} from 'react';
 import styled from '@emotion/styled';
-import { Transition } from '@headlessui/react';
+import {Transition} from '@headlessui/react';
 
 import useScrollDirection from '@app/hooks/useScrollDirection';
 
@@ -15,7 +13,7 @@ type NavHiderProps = {
   children: React.ReactNode;
 }
 
-export default function NavHider({ className, children }: NavHiderProps) {
+export default function NavHider({className, children}: NavHiderProps) {
   const {scrollDirection, y} = useScrollDirection();
   return (
     <NavHiderWrapper className={`fixed inset-0 h-14 max-h-14 ${className}`}>
@@ -27,7 +25,7 @@ export default function NavHider({ className, children }: NavHiderProps) {
         enterTo="translate-y-0"
         leave="transform transition duration-200 ease-in"
         leaveFrom="translate-y-0"
-        leaveTo="-translate-y-full"    
+        leaveTo="-translate-y-full"
       >
         <div>
           {children}

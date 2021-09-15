@@ -9,7 +9,7 @@ export default function IconButton({
   className,
   children,
   onClick,
-  ariaLabel
+  ariaLabel,
 }: IconButtonProps) {
   return (
     <button
@@ -19,5 +19,5 @@ export default function IconButton({
     >
       {children}
     </button>
-  )
+  );
 }

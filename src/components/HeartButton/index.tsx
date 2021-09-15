@@ -37,7 +37,7 @@ export default function HeartButtons({
         <AnimatedIcon>
             <Heart
               style={{
-                color: 'rgba(127, 29, 29, 0.7)',
+                color: 'rgba(153, 27, 27, 0.7)',
                 fill: 'rgb(153, 27, 27)',
                 fillOpacity: hearted ? 1 : 0,
                 transition: 'fill-opacity 150ms linear'

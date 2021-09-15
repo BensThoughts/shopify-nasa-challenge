@@ -70,9 +70,9 @@ export default function Navbar({ className, ...rest }: NavBarProps) {
           </div>
       </Drawer>
       <NavHider>
-        <Nav {...rest} className={`bg-primary bg-opacity-70 shadow-lg ${className}`}>
+        <Nav {...rest} className={`bg-primary bg-opacity-70 backdrop-filter backdrop-blur-sm shadow-lg ${className}`}>
           {/* Small- Screens */}  
-          <div className="flex md:hidden w-full justify-start items-center mx-3">
+          <div className="flex md:hidden w-full justify-end items-center mx-2">
             <IconButton
               onClick={() => setIsOpen(!isOpen)}
               className="md:hidden mr-3"

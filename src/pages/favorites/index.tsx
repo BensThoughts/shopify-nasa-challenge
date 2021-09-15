@@ -1,6 +1,6 @@
 import { useAppSelector } from '@app/store/hooks';
 import { selectAllReactions } from '@app/store/reactionsSlice';
-import { selectImageMetaEntities } from '@app/store/imagesSlice';
+import { Heart } from 'react-feather';
 
 import GridWrapper from '@app/components/GridWrapper';
 import MaxWidthWrapper from '@app/components/MaxWidthWrapper';
@@ -27,14 +27,18 @@ export default function FavoritesPage() {
         </div>
       </div>
       <GridWrapper>
-        {heartedImages
-          ?
-            <div className="flex gap-3 flex-wrap items-center justify-center mb-5">
+        {heartedImages && heartedImages.length > 0
+          ? <div className="flex gap-3 flex-wrap items-center justify-center mb-5">
               {heartedImages.map((img) => (
                  <SmallImageCard key={img.url} title={img.title} date={img.date} url={img.url} hdurl={img.hdurl} />
               ))}
             </div>
-          : <div className="w-full h-full flex items-center justify-center"><p>Looks like you don&apos;t have any favorites yet</p></div>
+          : <div className="text-center w-full">
+              <p>Looks like you don&apos;t have any favorites.</p>
+              <p>
+                Try clicking the&nbsp;<Heart style={{ color: 'rgba(127, 29, 29, 0.7)', display: 'inline' }} />&nbsp;icon.
+              </p>
+            </div>
         }
       </GridWrapper>
     </MaxWidthWrapper>

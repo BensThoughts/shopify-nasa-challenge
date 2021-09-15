@@ -10,22 +10,9 @@ import GridWrapper from '../components/GridWrapper';
 import MaxWidthWrapper from '../components/MaxWidthWrapper';
 import ImageCard from '@app/components/ImageCard';
 import LoadingSpinner from '@app/components/LoadingSpinner';
+import Title from '@app/components/Title';
 
 const DATE_FORMAT = 'yyyy-MM-dd';
-
-const Title = styled.h1`
-  font-family: 'EdgeOfGalaxy';
-  letter-spacing: .2em;
-  font-size: 2rem;
-  @media (min-width: 640px) {
-    font-size: 3rem;
-    line-height: 3.5rem;
-  }
-  @media (min-width: 768px) {
-    font-size: 4rem;
-    line-height: 4.5rem;
-  }
-`;
 
 const Home: NextPage = () => {
   const dispatch = useAppDispatch();
@@ -65,7 +52,7 @@ const Home: NextPage = () => {
 
   return (
     <MaxWidthWrapper>
-        <div className="w-full flex flex-col items-center justify-center my-3">
+        <div className="w-full flex flex-col items-center justify-center my-5">
           <Title aria-label="app title">Spacestagram</Title>
           <div>
             <h2 className="italic md:font-light text-base sm:text-lg md:text-xl">The final frontier</h2>

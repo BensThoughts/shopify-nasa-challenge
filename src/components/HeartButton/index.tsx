@@ -33,7 +33,7 @@ export default function HeartButtons({
 
   return (
     <div className="flex gap-x-2 md:gap-x-4">
-      <button onClick={setHeart}>
+      <button onClick={setHeart} title={`Add ${title} to favorites`}>
         <AnimatedIcon>
             <Heart
               style={{

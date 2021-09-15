@@ -8,9 +8,7 @@ import { format } from 'date-fns';
 import Image from 'next/image';
 import DateComponent from '@app/components/DateComponent';
 import ImageModal from '@app/components/ImageModal';
-import ReactionButtons from '@app/components/HeartButton';
-import DetailsPanel from '@app/components/DetailsPanel';
-import { selectImageMetaById } from '@app/store/imagesSlice';
+import DownloadButton from '@app/components/DownloadButton';
 
 const shimmer = (w: number, h: number) => `
 <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -113,6 +111,7 @@ export default function ImageCard({
               <Image
               src={url}
               alt={title}
+              title={title}
               width={SMALL_SIZE}
               height={SMALL_SIZE}
               placeholder="blur"
@@ -133,11 +132,11 @@ export default function ImageCard({
             {title} */}
             <DateComponent dateString={date} />
             {/* {copyright && <div className="font-normal">Copyright: {copyright}</div>}
-          </div>
+          </div>*/}
 
           <div className="md:mr-2">
-            <ReactionButtons url={url} date={date} hearted={hearted} bookmarked={bookmarked} />
-          </div> */}
+            <DownloadButton title={title} url={url} hdurl={hdurl} date={date} />
+          </div> 
 
         </div>
 

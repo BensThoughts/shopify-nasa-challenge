@@ -12,7 +12,7 @@ export default function LoadingSpinner({ style = {}, size = 32 }: LoadingSpinner
     <div className="m-2 overflow-hidden" style={style}>
       <div
         style={{ borderTopColor: 'transparent'}}
-        className={`w-${size} h-${size} border-4 border-gray-600 border-dotted rounded-full animate-spin`}
+        className={`w-16 h-16 border-4 border-primary border-dotted rounded-full animate-spin`}
       ></div>
     </div>
   );

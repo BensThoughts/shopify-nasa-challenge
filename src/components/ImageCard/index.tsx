@@ -110,6 +110,7 @@ export default function ImageCard({
               <Image
               src={url}
               alt={title}
+              title={title}
               width={SMALL_SIZE}
               height={SMALL_SIZE}
               placeholder="blur"

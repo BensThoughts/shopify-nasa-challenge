@@ -10,7 +10,10 @@ export default function DetailsPanel({ details }: DetailsPanelProps) {
     <Disclosure>
       {({ open }) => (
         <>
-          <Disclosure.Button className="flex justify-between w-full px-4 py-2 text-sm font-medium text-left text-primary bg-gray-400 bg-opacity-50 hover:bg-opacity-70 ">
+          <Disclosure.Button
+            title="Reveal more information on this image."
+            className="flex justify-between w-full px-4 py-2 text-sm font-medium text-left text-primary bg-gray-400 bg-opacity-50 hover:bg-opacity-70 "
+          >
             <span>View Details</span>
             <ChevronUp 
               className={`${

@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Download } from 'react-feather';
 
+import axios from 'axios';
+
 import AnimatedIcon from '@app/components/AnimatedIcon';
 
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 interface DownloadButtonProps {
   url: string;
   hdurl: string;
@@ -18,24 +21,44 @@ export default function DownloadButton({
 }: DownloadButtonProps) {
   const [downloading, setDownloading] = useState(false);
 
+  const patt1 = /\.([0-9a-z]+)(?:[\?#]|$)/i;
+  const extMatch = (hdurl).match(patt1);
+  const ext = extMatch?.at(1);
+
   useEffect(() => {
     async function downloadImage(imageSrc: string) {
       const patt1 = /\.([0-9a-z]+)(?:[\?#]|$)/i;
       const extMatch = (imageSrc).match(patt1);
       const ext = extMatch?.at(1);
       if (ext) {
-        const image = await fetch(imageSrc, {
-          mode: 'no-cors'
-        });
-        const imageBlob = await image.blob();
-        const imageUrl = URL.createObjectURL(imageBlob);
-  
-        const link = document.createElement('a');
-        link.href = imageUrl;
-        link.download = `${date}-${title}.${ext}`;
-        document.body.appendChild(link);
-        link.click()
-        document.body.removeChild((link));
+        console.log(imageSrc);
+        try {
+          // const response = await axios({
+          //   url: imageSrc,
+          //   method: 'GET',
+          //   params: {
+          //     api_key: API_KEY
+          //   }
+          // });
+          // console.log(response);
+          const image = await fetch(imageSrc, {
+            method: 'GET',
+            mode: 'no-cors'
+          });
+          console.log(image);
+          const imageBlob = await image.blob();
+          console.log(imageBlob);
+          const imageUrl = URL.createObjectURL(imageBlob);
+    
+          const link = document.createElement('a');
+          link.href = imageUrl;
+          link.download = `${date}-${title}.${ext}`;
+          document.body.appendChild(link);
+          link.click()
+          document.body.removeChild((link));
+        } catch (e) {
+          console.log(e);
+        }
       }
       setDownloading(false);
     }
@@ -45,10 +68,10 @@ export default function DownloadButton({
   }, [downloading, hdurl, date, title]);
 
   return (
-    <button onClick={() => setDownloading(true)}>
+    <a href={hdurl} title={`Download ${title}`} download={`${date}-${title}.jpg`} target="_blank" rel="noreferrer noopener">
       <AnimatedIcon>
-        <Download />
+        <Download className="text-primary text-opacity-70" />
       </AnimatedIcon>
-    </button>  
+    </a>  
   );
 }

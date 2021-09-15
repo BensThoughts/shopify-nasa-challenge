@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import styled from '@emotion/styled';
 import { HTMLAttributes } from 'react';
 import { useAppSelector } from '@app/store/hooks';
@@ -16,7 +16,7 @@ import { selectImageMetaById } from '@app/store/imagesSlice';
 const shimmer = (w: number, h: number) => `
 <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
-    <linearGradient id="g">
+    <linearGradient id="g" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop stop-color="#333" offset="10%" />
       <stop stop-color="#222" offset="50%" />
       <stop stop-color="#333" offset="90%" />
@@ -71,6 +71,7 @@ export default function ImageCard({
   const [blurFull, setBlurFull] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const reaction = useAppSelector(state => selectReactionsById(state, url));
+  const ref = useRef();
 
   let bookmarked = false;
   let hearted = false;

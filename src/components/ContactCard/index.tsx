@@ -11,9 +11,6 @@ import AnimatedIcon from '../AnimatedIcon';
 export default function ContactCard({className, ...rest}: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div className={`flex flex-col text-center ${className}`} {...rest}>
-      <p>
-      Contact me on these platforms.
-      </p>
       <div className="flex mt-3">
         <a href="mailto:bensthoughts@gmail.com" className="mx-3">
           <AnimatedIcon>

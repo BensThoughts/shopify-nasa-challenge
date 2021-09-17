@@ -14,16 +14,10 @@ import {compareAsc} from 'date-fns';
 import 'react-calendar/dist/Calendar.css';
 
 const CalendarWrap = styled.div`
-  position: fixed;
-  bottom: 0px;
-  right: 0px;
-  background-color: rgba(var(--color-app-primary), 0.4);
-  /* width: 4rem;
-  height: 4rem; */
-  z-index: 99;
+  display: none;
   @media (min-width: 1024px) {
     grid-column: 3;
-    grid-row: 2;
+    grid-row: 1;
     position: sticky;
     display: block;
     align-self: flex-start;
@@ -76,7 +70,7 @@ export default function Calendar() {
         // prev2Label=""
         nextAriaLabel="next"
         navigationAriaLabel="select a date to start the images at"
-        className={`shadow-md`}
+        className={`shadow-md opacity-60`}
       />
     </CalendarWrap>
   );

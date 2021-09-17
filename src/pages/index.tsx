@@ -9,6 +9,7 @@ import ImageCard from '@app/components/ImageCard';
 import LoadingSpinner from '@app/components/LoadingSpinner';
 import Title from '@app/components/Title';
 import Calendar from '@app/components/Calendar';
+import MaxWidthWrapper from '@app/components/MaxWidthWrapper';
 
 // import formatDate from '@app/hooks/formatDate';
 
@@ -41,17 +42,18 @@ const Home: NextPage = () => {
   }
   console.log(moreImages);
   return (
-    <GridWrapper charWidth={65}>
-      <Calendar />
+    <MaxWidthWrapper>
+
       <section aria-label="page title" className="w-full flex flex-col items-center justify-center my-5">
         <Title>Spacestagram</Title>
         <h2 className="italic md:font-light text-base sm:text-lg md:text-xl">The final frontier</h2>
       </section>
-
-      <section
-        aria-label="Infinite scrolling list of images"
-      >
-        {imagesStatus === 'succeeded' || !firsLoad ?
+      <GridWrapper charWidth={65}>
+        <Calendar />
+        <section
+          aria-label="Infinite scrolling list of images"
+        >
+          {imagesStatus === 'succeeded' || !firsLoad ?
               (<InfiniteScroll
                 dataLength={images.length}
                 next={fetchData}
@@ -81,9 +83,10 @@ const Home: NextPage = () => {
 
               </InfiniteScroll>) :
               <div><LoadingSpinner size={40} /></div>
-        }
-      </section>
-    </GridWrapper>
+          }
+        </section>
+      </GridWrapper>
+    </MaxWidthWrapper>
   );
 };
 

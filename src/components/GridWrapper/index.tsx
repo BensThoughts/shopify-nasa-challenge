@@ -13,6 +13,11 @@ const Wrapper = styled.div<{
     grid-column: 1 / -1;
   }
   @media (min-width: 768px) {
+    display: grid;
+    grid-template-columns: ${({charWidth = 90}) => `1fr min(${charWidth}ch, 100%) 1fr`};
+    align-items: center;
+    justify-items: center;
+    row-gap: 2.5rem;
     * {
       grid-column: 2;
     }

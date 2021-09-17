@@ -1,17 +1,17 @@
 import {useEffect, useState} from 'react';
 import type {NextPage} from 'next';
-import {format, parseISO, subDays} from 'date-fns';
+import {subDays} from 'date-fns';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {useAppDispatch, useAppSelector} from '@app/store/hooks';
 
-import {fetchImagesMetadata, selectAllImageMeta} from '@app/store/imagesSlice';
+import {fetchImagesMetadata, selectAllImageMeta, selectDate} from '@app/store/imagesSlice';
 import GridWrapper from '../components/GridWrapper';
-import MaxWidthWrapper from '../components/MaxWidthWrapper';
 import ImageCard from '@app/components/ImageCard';
 import LoadingSpinner from '@app/components/LoadingSpinner';
 import Title from '@app/components/Title';
+import Calendar from '@app/components/Calendar';
 
-const DATE_FORMAT = 'yyyy-MM-dd';
+import formatDate from '@app/hooks/formatDate';
 
 const Home: NextPage = () => {
   const dispatch = useAppDispatch();
@@ -19,24 +19,32 @@ const Home: NextPage = () => {
   const firsLoad = useAppSelector((state) => state.images.firstLoad);
   const error = useAppSelector((state) => state.images.error);
   const images = useAppSelector(selectAllImageMeta);
-
+  const dateCutoff = useAppSelector(selectDate);
+  console.log('index dateCutoff: ' + dateCutoff);
 
   const today = new Date();
-  const todayFormatted = format(today, DATE_FORMAT);
-  const startDateFormatted = format(subDays(today, 10), DATE_FORMAT);
-  const [lastDate, setLastDate] = useState(startDateFormatted);
+  const [endDate, setEndDate] = useState(dateCutoff);
+  const [startDate, setStartDate] = useState(subDays(today, 10));
+  // const [lastDate, setLastDate] = useState(startDateFormatted);
 
   useEffect(() => {
     if (imagesStatus === 'idle') {
-      dispatch(fetchImagesMetadata({start_date: startDateFormatted, end_date: todayFormatted}));
+      dispatch(fetchImagesMetadata({start_date: formatDate(startDate), end_date: formatDate(endDate)}));
     }
-  }, [imagesStatus, dispatch, todayFormatted, startDateFormatted]);
+  }, [imagesStatus, dispatch, endDate, startDate]);
 
   function fetchData() {
-    const newStartDate = format(subDays(parseISO(lastDate), 10), DATE_FORMAT);
-    const newEndDate = format(subDays(parseISO(lastDate), 1), DATE_FORMAT);
-    dispatch(fetchImagesMetadata({start_date: newStartDate, end_date: newEndDate}));
-    setLastDate(newStartDate);
+    const newStartDate = subDays(startDate, 10);
+    const newEndDate = subDays(endDate, 10);
+    // const newStartDate = format(subDays(parseISO(startDateFormatted), 10), DATE_FORMAT);
+    // const newEndDate = format(subDays(parseISO(endDateFormatted), 10), DATE_FORMAT);
+    dispatch(fetchImagesMetadata({
+      start_date: formatDate(newStartDate),
+      end_date: formatDate(newEndDate),
+    }));
+
+    setStartDate(newStartDate);
+    setEndDate(newEndDate);
   }
 
   let statusText;
@@ -50,7 +58,8 @@ const Home: NextPage = () => {
   }
 
   return (
-    <MaxWidthWrapper>
+    <GridWrapper charWidth={65}>
+      <Calendar />
       <section aria-label="page title" className="w-full flex flex-col items-center justify-center my-5">
         <Title>Spacestagram</Title>
         <h2 className="italic md:font-light text-base sm:text-lg md:text-xl">The final frontier</h2>
@@ -90,7 +99,7 @@ const Home: NextPage = () => {
               <div><LoadingSpinner size={40} /></div>
         }
       </section>
-    </MaxWidthWrapper>
+    </GridWrapper>
   );
 };
 

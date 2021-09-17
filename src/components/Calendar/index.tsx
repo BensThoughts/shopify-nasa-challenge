@@ -10,7 +10,7 @@ import {
 import {compareAsc} from 'date-fns';
 // import formatDate from '@app/hooks/formatDate';
 
-
+// import './calendar.module.css';
 import 'react-calendar/dist/Calendar.css';
 
 const CalendarWrap = styled.div`
@@ -62,13 +62,21 @@ export default function Calendar() {
         // navigationLabel={
         //   ({date, label, locale, view}) => `Current view: ${view}, date: ${date.toLocaleDateString(locale)}`
         // }
-        nextLabel={<ArrowRight className="text-primary text-opacity-70" />}
-        prevLabel={<ArrowLeft className="text-primary text-opacity-70" />}
-        next2Label=""
-        prev2Label=""
+        nextLabel={
+          <div className="flex items-center justify-center">
+            <ArrowRight className="text-primary text-opacity-70 text-center" />
+          </div>
+        }
+        prevLabel={
+          <div className="flex items-center justify-center">
+            <ArrowLeft className="text-primary text-opacity-70" />
+          </div>
+        }
+        // next2Label=""
+        // prev2Label=""
         nextAriaLabel="next"
         navigationAriaLabel="select a date to start the images at"
-        className={`p-3 bg-primary shadow-md rounded-md`}
+        className={`shadow-md`}
       />
     </CalendarWrap>
   );

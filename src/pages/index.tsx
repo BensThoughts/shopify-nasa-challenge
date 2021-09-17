@@ -23,12 +23,12 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     if (imagesStatus === 'idle') {
-      dispatch(fetchImagesMetadata({}));
+      dispatch(fetchImagesMetadata());
     }
   }, [imagesStatus, dispatch]);
 
   function fetchData() {
-    dispatch(fetchImagesMetadata({}));
+    dispatch(fetchImagesMetadata());
   }
 
   let statusText;
@@ -40,7 +40,7 @@ const Home: NextPage = () => {
   } else if (imagesStatus === 'failed') {
     statusText = <p>Error: {error}</p>;
   }
-  console.log(moreImages);
+
   return (
     <MaxWidthWrapper>
 

@@ -45,6 +45,7 @@ export default function Calendar() {
 
   return (
     <CalendarWrap className="">
+      <h2 className="text-center text-lg text-opacity-80 text-primary mb-2">Select a Start Date</h2>
       <MyCalendar
         onChange={setSelectedDate}
         value={selectedDate}

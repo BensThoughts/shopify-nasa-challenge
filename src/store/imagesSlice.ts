@@ -20,8 +20,7 @@ const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 function hasMoreImages(endDate: string) {
   const eDate = parseISO(endDate);
   const cmpr = compareAsc(parseISO('1995-06-26'), eDate);
-  console.log(cmpr);
-  console.log('endDate: ' + endDate);
+
   if (cmpr >= 0) {
     return false;
   }
@@ -76,20 +75,18 @@ const initialState: ImageMetadataState = imagesAdapter.getInitialState({
 
 export const fetchImagesMetadata = createAsyncThunk<
   ImageMetadataResponse[],
-  {},
+  void,
   {
     state: RootState,
     dispatch: AppDispatch
   }
->('images/requestStatus', async (date, thunkApi) => {
+>('images/requestStatus', async (_, thunkApi) => {
   // const {start_date, end_date} = date;
   const state = thunkApi.getState();
   const dispatch = thunkApi.dispatch;
   const endDate = state.images.endDate;
   const startDate = formatDate(subDays(parseISO(endDate), DATE_SPREAD));
 
-  // console.log('THUNK DATE: ' + thunkApi.getState().images.dateCutoff);
-  // const startDate = thunkApi.getState().images.startDate;
   const response = await axios.get<ImageMetadataResponse[]>(`https://api.nasa.gov/planetary/apod`, {
     params: {
       api_key: API_KEY,
@@ -123,7 +120,7 @@ const imagesSlice = createSlice({
       imagesAdapter.removeAll(state);
       state.endDate = date;
       state.status = 'idle';
-      console.log(date);
+
       if (hasMoreImages(date)) {
         state.moreImages = true;
       } else {
@@ -138,7 +135,7 @@ const imagesSlice = createSlice({
     builder.addCase(fetchImagesMetadata.fulfilled, (state, action: PayloadAction<ImageMetadataResponse[]>) => {
       state.status = 'succeeded';
       state.firstLoad = false;
-      // console.log(action.payload);
+
       const data: ImageMetadata[] = action.payload.filter((imgMeta) => imgMeta.media_type === 'image').map((imgMeta) => {
         return {
           // id: imgMeta.url,

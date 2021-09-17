@@ -1,50 +1,33 @@
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import type {NextPage} from 'next';
-import {subDays} from 'date-fns';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {useAppDispatch, useAppSelector} from '@app/store/hooks';
 
-import {fetchImagesMetadata, selectAllImageMeta, selectDate} from '@app/store/imagesSlice';
+import {fetchImagesMetadata, selectAllImageMeta} from '@app/store/imagesSlice';
 import GridWrapper from '../components/GridWrapper';
 import ImageCard from '@app/components/ImageCard';
 import LoadingSpinner from '@app/components/LoadingSpinner';
 import Title from '@app/components/Title';
 import Calendar from '@app/components/Calendar';
 
-import formatDate from '@app/hooks/formatDate';
+// import formatDate from '@app/hooks/formatDate';
 
 const Home: NextPage = () => {
   const dispatch = useAppDispatch();
   const imagesStatus = useAppSelector((state) => state.images.status);
   const firsLoad = useAppSelector((state) => state.images.firstLoad);
+  const moreImages = useAppSelector((state) => state.images.moreImages);
   const error = useAppSelector((state) => state.images.error);
   const images = useAppSelector(selectAllImageMeta);
-  const dateCutoff = useAppSelector(selectDate);
-  console.log('index dateCutoff: ' + dateCutoff);
-
-  const today = new Date();
-  const [endDate, setEndDate] = useState(dateCutoff);
-  const [startDate, setStartDate] = useState(subDays(today, 10));
-  // const [lastDate, setLastDate] = useState(startDateFormatted);
 
   useEffect(() => {
     if (imagesStatus === 'idle') {
-      dispatch(fetchImagesMetadata({start_date: formatDate(startDate), end_date: formatDate(endDate)}));
+      dispatch(fetchImagesMetadata({}));
     }
-  }, [imagesStatus, dispatch, endDate, startDate]);
+  }, [imagesStatus, dispatch]);
 
   function fetchData() {
-    const newStartDate = subDays(startDate, 10);
-    const newEndDate = subDays(endDate, 10);
-    // const newStartDate = format(subDays(parseISO(startDateFormatted), 10), DATE_FORMAT);
-    // const newEndDate = format(subDays(parseISO(endDateFormatted), 10), DATE_FORMAT);
-    dispatch(fetchImagesMetadata({
-      start_date: formatDate(newStartDate),
-      end_date: formatDate(newEndDate),
-    }));
-
-    setStartDate(newStartDate);
-    setEndDate(newEndDate);
+    dispatch(fetchImagesMetadata({}));
   }
 
   let statusText;
@@ -56,7 +39,7 @@ const Home: NextPage = () => {
   } else if (imagesStatus === 'failed') {
     statusText = <p>Error: {error}</p>;
   }
-
+  console.log(moreImages);
   return (
     <GridWrapper charWidth={65}>
       <Calendar />
@@ -72,8 +55,9 @@ const Home: NextPage = () => {
               (<InfiniteScroll
                 dataLength={images.length}
                 next={fetchData}
-                hasMore={true}
+                hasMore={moreImages}
                 style={{display: 'flex', width: '100%', flexDirection: 'column', alignItems: 'center'}}
+                endMessage={<div>No More Images</div>}
                 loader={
                   <div className="flex flex-col align-center justify-center w-full">
                     <LoadingSpinner size={16} style={{alignSelf: 'center'}} />

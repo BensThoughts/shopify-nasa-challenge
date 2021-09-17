@@ -10,11 +10,23 @@ import {
 import axios from 'axios';
 
 
-import {RootState} from '@app/store/store';
+import {AppDispatch, RootState} from '@app/store/store';
 import formatDate from '@app/hooks/formatDate';
-import {parseISO} from 'date-fns';
+import {compareAsc, parseISO, subDays} from 'date-fns';
 
+const DATE_SPREAD = 10;
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
+function hasMoreImages(endDate: string) {
+  const eDate = parseISO(endDate);
+  const cmpr = compareAsc(parseISO('1995-06-26'), eDate);
+  console.log(cmpr);
+  console.log('endDate: ' + endDate);
+  if (cmpr >= 0) {
+    return false;
+  }
+  return true;
+}
 interface ImageMetadataResponse {
   copyright: string,
   date: string, // TODO: Could be Date type
@@ -42,8 +54,10 @@ export interface ImageMetadata {
 interface ImageMetadataState extends EntityState<ImageMetadata> {
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | undefined;
-  dateCutoff: string;
+  endDate: string;
+  // startDate: string;
   firstLoad: boolean;
+  moreImages: boolean;
 };
 
 const imagesAdapter = createEntityAdapter<ImageMetadata>({
@@ -54,39 +68,40 @@ const imagesAdapter = createEntityAdapter<ImageMetadata>({
 const initialState: ImageMetadataState = imagesAdapter.getInitialState({
   status: 'idle',
   error: undefined,
-  dateCutoff: formatDate(new Date),
-  firstLoad: false,
+  endDate: formatDate(new Date()),
+  startDate: formatDate(subDays(new Date(), DATE_SPREAD)),
+  firstLoad: true,
+  moreImages: true,
 });
-
-const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
-
-interface fetchImagesArgs {
-  start_date: string,
-  end_date: string,
-}
 
 export const fetchImagesMetadata = createAsyncThunk<
   ImageMetadataResponse[],
-  fetchImagesArgs,
+  {},
   {
-    state: RootState
+    state: RootState,
+    dispatch: AppDispatch
   }
 >('images/requestStatus', async (date, thunkApi) => {
-  const {start_date, end_date} = date;
+  // const {start_date, end_date} = date;
+  const state = thunkApi.getState();
+  const dispatch = thunkApi.dispatch;
+  const endDate = state.images.endDate;
+  const startDate = formatDate(subDays(parseISO(endDate), DATE_SPREAD));
+
   // console.log('THUNK DATE: ' + thunkApi.getState().images.dateCutoff);
   // const startDate = thunkApi.getState().images.startDate;
   const response = await axios.get<ImageMetadataResponse[]>(`https://api.nasa.gov/planetary/apod`, {
     params: {
       api_key: API_KEY,
-      start_date: start_date,
-      end_date: end_date,
+      start_date: startDate,
+      end_date: endDate,
     },
   });
-  // const response = await fetch(`https://api.nasa.gov/planetary/apod?API_KEY=${API_KEY}`, {
-  //   method: 'GET',
-  // });
+
+  const newEndDate = subDays(parseISO(endDate), DATE_SPREAD);
+  dispatch(setEndDate(newEndDate));
+
   const data = response.data;
-  // console.log(response);
   return data;
 });
 
@@ -96,9 +111,24 @@ const imagesSlice = createSlice({
   reducers: {
     setEndDate(state, action: PayloadAction<{date: string}>) {
       const {date} = action.payload;
+      if (hasMoreImages(date)) {
+        state.moreImages = true;
+      } else {
+        state.moreImages = false;
+      }
+      state.endDate = date;
+    },
+    resetEndDate(state, action: PayloadAction<{date: string}>) {
+      const {date} = action.payload;
       imagesAdapter.removeAll(state);
-      state.dateCutoff = date;
+      state.endDate = date;
       state.status = 'idle';
+      console.log(date);
+      if (hasMoreImages(date)) {
+        state.moreImages = true;
+      } else {
+        state.moreImages = false;
+      }
     },
   },
   extraReducers: (builder) => {
@@ -132,14 +162,17 @@ const imagesSlice = createSlice({
   },
 });
 
-// export const {
-//   setEndDate,
-// } = imagesSlice.actions;
-
-export const selectDate = (state: RootState) => parseISO(state.images.dateCutoff);
+export const selectEndDate = (state: RootState) => parseISO(state.images.endDate);
 
 export const setEndDate = createAction('images/setEndDate', function prepare(date: Date) {
-  console.log('Action Date: ' + date);
+  return {
+    payload: {
+      date: formatDate(date),
+    },
+  };
+});
+
+export const resetEndDate = createAction('images/resetEndDate', function prepare(date: Date) {
   return {
     payload: {
       date: formatDate(date),

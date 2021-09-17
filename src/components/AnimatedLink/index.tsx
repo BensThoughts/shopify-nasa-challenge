@@ -43,6 +43,7 @@ const AnimatedLink = forwardRef<HTMLAnchorElement, AProps>(({
   return (
     <A
       ref={ref}
+      onClick={onClick}
       className={className}
       {...rest}
     >

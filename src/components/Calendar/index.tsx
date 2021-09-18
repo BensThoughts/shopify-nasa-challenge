@@ -1,8 +1,8 @@
-import {useEffect, useState} from 'react';
+// import {useEffect, useState} from 'react';
 import styled from '@emotion/styled';
 import ReactCalendar from 'react-calendar';
-import {useAppDispatch} from '@app/store/hooks';
-import {resetEndDate} from '@app/store/imagesSlice';
+import {useAppDispatch, useAppSelector} from '@app/store/hooks';
+import {resetEndDate, selectCalendarDate} from '@app/store/imagesSlice';
 import {
   ArrowRight,
   ArrowLeft,
@@ -34,21 +34,30 @@ const MyCalendar = styled(ReactCalendar)`
 `;
 
 export default function Calendar() {
-  const today = new Date();
-  const [selectedDate, setSelectedDate] = useState(today);
   const dispatch = useAppDispatch();
+  const today = new Date();
+  const calendarDate = useAppSelector(selectCalendarDate);
+  // const firstLoad = useAppSelector((state) => state.images.firstLoad);
+  // if (!firstLoad) {
+  //   today = dateNow;
+  // }
 
-  useEffect(() => {
-    dispatch(resetEndDate(selectedDate));
-  }, [selectedDate, dispatch]);
+  // const [selectedDate, setSelectedDate] = useState(today);
 
+  // useEffect(() => {
+  //   //dispatch(resetEndDate(selectedDate));
+  // }, [selectedDate, dispatch]);
+
+  function setSelectedDate(date: Date) {
+    dispatch(resetEndDate(date));
+  }
 
   return (
     <CalendarWrap className="">
       <h2 className="text-center text-lg text-opacity-80 text-primary mb-2">Select a Start Date</h2>
       <MyCalendar
         onChange={setSelectedDate}
-        value={selectedDate}
+        value={calendarDate}
         maxDate={today}
         minDate={new Date(1995, 5, 26)}
         tileDisabled={({activeStartDate, date, view}) => compareAsc(date, today) >= 0}

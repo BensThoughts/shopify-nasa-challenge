@@ -54,7 +54,7 @@ interface ImageMetadataState extends EntityState<ImageMetadata> {
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | undefined;
   endDate: string;
-  // startDate: string;
+  calendarDate: string;
   firstLoad: boolean;
   moreImages: boolean;
 };
@@ -68,7 +68,7 @@ const initialState: ImageMetadataState = imagesAdapter.getInitialState({
   status: 'idle',
   error: undefined,
   endDate: formatDate(new Date()),
-  startDate: formatDate(subDays(new Date(), DATE_SPREAD)),
+  calendarDate: formatDate(new Date()),
   firstLoad: true,
   moreImages: true,
 });
@@ -81,10 +81,10 @@ export const fetchImagesMetadata = createAsyncThunk<
     dispatch: AppDispatch
   }
 >('images/requestStatus', async (_, thunkApi) => {
-  // const {start_date, end_date} = date;
   const state = thunkApi.getState();
   const dispatch = thunkApi.dispatch;
   const endDate = state.images.endDate;
+
   const startDate = formatDate(subDays(parseISO(endDate), DATE_SPREAD));
 
   const response = await axios.get<ImageMetadataResponse[]>(`https://api.nasa.gov/planetary/apod`, {
@@ -119,7 +119,9 @@ const imagesSlice = createSlice({
       const {date} = action.payload;
       imagesAdapter.removeAll(state);
       state.endDate = date;
+      state.firstLoad = true;
       state.status = 'idle';
+      state.calendarDate = date;
 
       if (hasMoreImages(date)) {
         state.moreImages = true;
@@ -160,6 +162,7 @@ const imagesSlice = createSlice({
 });
 
 export const selectEndDate = (state: RootState) => parseISO(state.images.endDate);
+export const selectCalendarDate = (state: RootState) => parseISO(state.images.calendarDate);
 
 export const setEndDate = createAction('images/setEndDate', function prepare(date: Date) {
   return {

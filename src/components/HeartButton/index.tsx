@@ -38,9 +38,10 @@ export default function HeartButtons({
     <button
       onClick={setHeart}
       title={`Add ${title} to favorites`}
+      aria-label={`Add ${title} to favorites`}
       {...rest}
     >
-      <AnimatedIcon aria-label={`Add ${title} to favorites`}>
+      <AnimatedIcon>
         <Heart
           style={{
             color: 'rgba(153, 27, 27, 0.7)',

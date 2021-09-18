@@ -67,12 +67,12 @@ export default function Calendar() {
         //   ({date, label, locale, view}) => `Current view: ${view}, date: ${date.toLocaleDateString(locale)}`
         // }
         nextLabel={
-          <div className="flex items-center justify-center">
+          <div aria-label="previous" role="button" className="flex items-center justify-center">
             <ArrowRight className="text-primary text-opacity-70 text-center" />
           </div>
         }
         prevLabel={
-          <div className="flex items-center justify-center">
+          <div aria-label="previous" role="button" className="flex items-center justify-center">
             <ArrowLeft className="text-primary text-opacity-70" />
           </div>
         }

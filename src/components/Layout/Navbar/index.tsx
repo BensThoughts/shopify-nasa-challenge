@@ -35,7 +35,7 @@ export default function Navbar({
 
   return (
     <>
-      <Drawer isOpen={isOpen} setIsOpen={setIsOpen} title="Menu" description="Try something new!">
+      <Drawer isOpen={isOpen} setIsOpen={setIsOpen} title="Menu" description="Explore Space!">
         <div className="flex flex-col items-center justify-end content-between pt-0 w-full">
           <MenuItem
             href="/"

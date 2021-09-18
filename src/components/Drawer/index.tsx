@@ -50,7 +50,7 @@ export default function Drawer({
             <div className="flex flex-col justify-between bg-primary z-50 w-full max-w-sm p-6 overflow-hidden text-left align-middle shadow-xl rounded-r-sm">
               <div>
                 <Dialog.Title className="font-bold text-2xl md:text-4xl text-secondary">{title}</Dialog.Title>
-                <Dialog.Description>{description}</Dialog.Description>
+                <Dialog.Description className="italic font-thin">{description}</Dialog.Description>
                 {children}
               </div>
               <div className="self-center mt-10">

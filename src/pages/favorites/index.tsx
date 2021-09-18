@@ -26,7 +26,7 @@ export default function FavoritesPage() {
           <h2 className="italic md:font-light text-base sm:text-lg md:text-xl">Your favorites!</h2>
         </div>
       </section>
-      <GridWrapper charWidth={120}>
+      <GridWrapper charWidth={90}>
         <section aria-label="a gallery of your favorite images">
           {heartedImages && heartedImages.length > 0 ?
             <div className="flex gap-3 flex-wrap items-center justify-center mb-5">

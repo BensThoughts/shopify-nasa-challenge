@@ -88,7 +88,6 @@ export default function ImageCard({
             width={LARGE_SIZE}
             height={LARGE_SIZE}
             placeholder="blur"
-            onClick={() => setIsOpen(false)}
             onLoadingComplete={() => setBlurFull(false)}
             layout="intrinsic"
             blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(LARGE_SIZE, LARGE_SIZE))}`}

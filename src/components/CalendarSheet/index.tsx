@@ -46,7 +46,7 @@ export default function CalendarSheet({
 }: CalendarIconProps) {
   // const ref = useRef<SheetRef>();
   // const snapTo = (i: number) => ref.current?.snapTo(i);
-  console.log(isOpen);
+
   return (
     <>
       <Sheet

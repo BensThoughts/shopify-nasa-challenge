@@ -1,6 +1,7 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import styled from '@emotion/styled';
 import {Calendar, Menu} from 'react-feather';
+import {useRouter} from 'next/dist/client/router';
 
 import NavHider from './NavHider';
 import MenuDrawer from '@app/components/MenuDrawer';
@@ -33,7 +34,21 @@ export default function Navbar({
   ...rest
 }: NavBarProps) {
   const [isMenuOpen, setMenuIsOpen] = useState(false);
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [isSheetOpen, setSheetIsOpen] = useState(false);
+  const [showCalendarButton, setShowCalendarButton] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router) {
+      const route = router.asPath;
+      if (route != '/') {
+        setShowCalendarButton(false);
+      } else {
+        setShowCalendarButton(true);
+      }
+    }
+  }, [router]);
+
 
   return (
     <>
@@ -42,39 +57,50 @@ export default function Navbar({
         <div className="flex flex-col items-center justify-end content-between pt-0 w-full">
           <MenuItem
             href="/"
-            onClick={() => setMenuIsOpen(false)}
+            onClick={() => {
+              setMenuIsOpen(false);
+            }}
             className="hover:bg-secondary text-primary-dark w-full h-10 flex items-center justify-center text-xl mt-7"
           >
               Home
           </MenuItem>
           <MenuItem
             href="/favorites"
-            onClick={() => setMenuIsOpen(false)}
+            onClick={() => {
+              setSheetIsOpen(false);
+              setMenuIsOpen(false);
+            }}
             className="hover:bg-secondary text-primary-dark w-full h-10 flex items-center justify-center text-xl"
           >
               Favorites
           </MenuItem>
           <MenuItem
             href="/contact"
-            onClick={() => setMenuIsOpen(false)}
+            onClick={() => {
+              setSheetIsOpen(false);
+              setMenuIsOpen(false);
+            }}
             className="hover:bg-secondary text-primary-dark w-full h-10 flex items-center justify-center text-xl"
           >
               Contact
           </MenuItem>
         </div>
       </MenuDrawer>
-      <CalendarSheet isOpen={isSheetOpen && !isMenuOpen} setIsOpen={setIsSheetOpen} />
+      <CalendarSheet isOpen={isSheetOpen && !isMenuOpen} setIsOpen={setSheetIsOpen} />
       <NavHider>
         <Nav {...rest} className={`bg-primary bg-opacity-70 backdrop-filter backdrop-blur-sm shadow-lg ${className}`}>
           {/* Small- Screens */}
           <div className="flex lg:hidden w-full justify-between items-center mx-2">
-            <IconButton
-              onClick={() => setIsSheetOpen(!isSheetOpen)}
-              title="Calendar sheet"
-              className="lg:hidden ml-3"
-            >
-              <Calendar aria-label="Open calendar date picker" className="text-icon-primary" />
-            </IconButton>
+            {showCalendarButton &&
+              <IconButton
+                onClick={() => setSheetIsOpen(!isSheetOpen)}
+                title="Calendar sheet"
+                className="lg:hidden ml-3"
+              >
+                <Calendar aria-label="Open calendar date picker" className="text-icon-primary" />
+              </IconButton>
+            }
+            <div></div>
             <IconButton
               onClick={() => setMenuIsOpen(!isMenuOpen)}
               className="lg:hidden mr-3"

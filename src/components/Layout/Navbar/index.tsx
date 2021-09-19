@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import {Calendar, Menu} from 'react-feather';
 
 import NavHider from './NavHider';
-import Drawer from '@app/components/Drawer';
+import MenuDrawer from '@app/components/MenuDrawer';
 import MenuItem from '@app/components/Layout/MenuItem';
 import IconButton from '@app/components/IconButton';
 import CalendarSheet from '@app/components/CalendarSheet';
@@ -33,12 +33,12 @@ export default function Navbar({
   ...rest
 }: NavBarProps) {
   const [isMenuOpen, setMenuIsOpen] = useState(false);
-  const [sheetIsOpen, setSheetIsOpen] = useState(false);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   return (
     <>
-      <CalendarSheet isOpen={sheetIsOpen} setIsOpen={setSheetIsOpen} />
-      <Drawer isOpen={isMenuOpen} setIsOpen={setMenuIsOpen} title="Menu" description="Explore Space!">
+
+      <MenuDrawer isOpen={isMenuOpen} setIsOpen={setMenuIsOpen} title="Menu" description="Explore Space!">
         <div className="flex flex-col items-center justify-end content-between pt-0 w-full">
           <MenuItem
             href="/"
@@ -62,13 +62,14 @@ export default function Navbar({
               Contact
           </MenuItem>
         </div>
-      </Drawer>
+      </MenuDrawer>
+      <CalendarSheet isOpen={isSheetOpen && !isMenuOpen} setIsOpen={setIsSheetOpen} />
       <NavHider>
         <Nav {...rest} className={`bg-primary bg-opacity-70 backdrop-filter backdrop-blur-sm shadow-lg ${className}`}>
           {/* Small- Screens */}
           <div className="flex lg:hidden w-full justify-between items-center mx-2">
             <IconButton
-              onClick={() => setSheetIsOpen(!sheetIsOpen)}
+              onClick={() => setIsSheetOpen(!isSheetOpen)}
               title="Calendar sheet"
               className="lg:hidden ml-3"
             >

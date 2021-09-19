@@ -2,7 +2,7 @@ import {Fragment} from 'react';
 import {Dialog, Transition} from '@headlessui/react';
 import Button from '@app/components/Button';
 
-type DrawerProps = {
+type MenuDrawerProps = {
   title?: string,
   description?: string,
   children: React.ReactNode,
@@ -10,13 +10,13 @@ type DrawerProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function Drawer({
+export default function MenuDrawer({
   title = '',
   description = '',
   children,
   isOpen,
   setIsOpen,
-}: DrawerProps) {
+}: MenuDrawerProps) {
   return (
     <Transition show={isOpen} as={Fragment}>
       <Dialog

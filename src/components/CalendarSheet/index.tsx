@@ -1,14 +1,40 @@
 // import {Calendar} from 'react-feather';
 import Calendar from '@app/components/Calendar';
+// import {CSSProperties} from '@emotion/serialize';
+// import styled from '@emotion/styled';
 // import {useRef} from 'react';
 import Sheet from 'react-modal-sheet';
 // import React, {MutableRefObject, useEffect, useRef} from 'react';
+
+// const StyledSheet = styled(Sheet)`
+//   z-index: 0;
+//   .react-modal-sheet-container {
+//     z-index: 0;
+//   }
+//   .react-modal-sheet-header {
+//     z-index: 0;
+//     /* custom styles */
+//   }
+//   .react-modal-sheet-drag-indicator {
+//     z-index: 0;
+//     /* custom styles */
+//   }
+//   .react-modal-sheet-content {
+//     z-index: 0;
+//     /* custom styles */
+//   }
+//   .react-modal-sheet-backdrop {
+//     z-index: 0;
+//     /* custom styles */
+//   }
+// `;
 
 type CalendarIconProps = {
   isOpen: boolean,
   onClose?: React.Dispatch<React.SetStateAction<boolean>>,
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
   onOpen?(): void,
+  style?: React.CSSProperties
 }
 
 export default function CalendarSheet({
@@ -16,10 +42,11 @@ export default function CalendarSheet({
   onClose,
   setIsOpen,
   onOpen,
+  style = {},
 }: CalendarIconProps) {
   // const ref = useRef<SheetRef>();
   // const snapTo = (i: number) => ref.current?.snapTo(i);
-
+  console.log(isOpen);
   return (
     <>
       <Sheet
@@ -27,14 +54,15 @@ export default function CalendarSheet({
         onClose={() => setIsOpen(!isOpen)}
         snapPoints={[440, 40]}
         initialSnap={1}
-        rootId="root"
-        style={{opacity: '0.5'}}
+        // rootId="root"
+        // style={{opacity: '0.5'}}
         className="lg:hidden"
+        style={style}
       >
         <Sheet.Container
           style={{
             backgroundColor: 'rgba(var(--color-app-primary), 0.0)',
-            height: '475px',
+            // height: '475px',
           }}
         >
           <div className="h-full bg-primary backdrop-filter backdrop-blur-sm bg-opacity-70">

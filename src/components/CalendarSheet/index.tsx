@@ -9,7 +9,7 @@ type CalendarIconProps = {
   isOpen: boolean,
   openState: OpenState,
   // isOpen: boolean,
-  onClose: React.Dispatch<React.SetStateAction<boolean>>,
+  onClose: React.Dispatch<React.SetStateAction<OpenState>>,
   // setIsOpenFull: React.Dispatch<React.SetStateAction<boolean>>
   // isOpenFull: boolean
   // onOpen?(): void,
@@ -22,17 +22,12 @@ export default function CalendarSheet({
   openState = 'closed',
   isOpen = false,
   onSnap,
-  // isOpen = true,
   onClose,
-  // setIsOpenFull,
-  // isOpenFull = false,
   style = {},
 }: CalendarIconProps) {
   const ref = useRef<SheetRef>();
-  // const snapTo = (i: number) => ref.current?.snapTo(i);
 
   useEffect(() => {
-    console.log('openState: ' + openState);
     if (ref && isOpen) {
       if (ref.current) {
         switch (openState) {
@@ -54,15 +49,11 @@ export default function CalendarSheet({
       <Sheet
         isOpen={isOpen}
         onClose={() => {
-          console.log('onClose CalendarSheet');
-          // ref.current?.snapTo(2);
-          // setIsOpenFull(true);
-          // onClose(!isOpen);
+          onClose(openState);
         }}
         snapPoints={[440, 40, 0]}
         initialSnap={2}
         onSnap={(snapInfo) => {
-          console.log('snapInfo: ' + snapInfo);
           switch (snapInfo) {
             case 0:
               onSnap('full');
@@ -74,11 +65,6 @@ export default function CalendarSheet({
               onSnap('closed');
               break;
           }
-          // if (snapInfo === 0) {
-          //   setIsOpenFull(true);
-          // } else if (snapInfo === 1) {
-          //   setIsOpenFull(false);
-          // }
         }}
         className="lg:hidden"
         style={style}
@@ -93,23 +79,16 @@ export default function CalendarSheet({
             <Sheet.Header />
             <Sheet.Content>
               <div className="w-full h-full flex flex-col items-center">
-                <div
-                  className={`rounded-sm`}
-                  // style={{width: '600px'}}
-                >
+                <div className={`rounded-sm`}>
                   <h2 className="text-center text-xl text-opacity-100 text-primary mx-2 font-normal">Select a Start Date</h2>
                   <Calendar
                     className="rounded-lg"
                     style={{
                       backgroundColor: 'rgba(var(--color-app-accent), 0.8)',
-                      // borderColor: 'rgba(0, 0, 0, 0)',
                       marginTop: '0.5rem',
-                      // width: '100%',
-                      // height: '350px',
                       justifyContent: 'start',
                     }}
                   />
-
                 </div>
               </div>
             </Sheet.Content>

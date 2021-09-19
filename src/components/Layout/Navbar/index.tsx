@@ -37,7 +37,7 @@ export default function Navbar({
   const [openState, setOpenState] = useState<OpenState>('closed');
   const [isSheetOpen, setSheetOpen] = useState(false);
 
-  const [showCalendar, setShowCalendar] = useState(true);
+  const [showCalendarButton, setShowCalendarButton] = useState(true);
 
   const router = useRouter();
 
@@ -45,9 +45,9 @@ export default function Navbar({
     if (router) {
       const route = router.asPath;
       if (route != '/') {
-        setShowCalendar(false);
+        setShowCalendarButton(false);
       } else {
-        setShowCalendar(true);
+        setShowCalendarButton(true);
       }
     }
   }, [router]);
@@ -71,7 +71,7 @@ export default function Navbar({
             href="/"
             onClick={() => {
               setMenuIsOpen(false);
-              // setSheetIsOpen(false);
+              setSheetOpen(false);
             }}
             className="hover:bg-secondary text-primary-dark w-full h-10 flex items-center justify-center text-xl mt-7"
           >
@@ -80,7 +80,7 @@ export default function Navbar({
           <MenuItem
             href="/favorites"
             onClick={() => {
-              // setSheetIsOpen(false);
+              setSheetOpen(false);
               setMenuIsOpen(false);
             }}
             className="hover:bg-secondary text-primary-dark w-full h-10 flex items-center justify-center text-xl"
@@ -90,7 +90,7 @@ export default function Navbar({
           <MenuItem
             href="/contact"
             onClick={() => {
-              //  setSheetIsOpen(false);
+              setSheetOpen(false);
               setMenuIsOpen(false);
             }}
             className="hover:bg-secondary text-primary-dark w-full h-10 flex items-center justify-center text-xl"
@@ -99,33 +99,30 @@ export default function Navbar({
           </MenuItem>
         </div>
       </MenuDrawer>
-      {showCalendar &&
-        <CalendarSheet
-          isOpen={isSheetOpen}
-          onClose={() => {
-            console.log('onClose Navbar');
-            // setSheetIsOpenSmall(true);
-            // setSheetIsOpenFull(true);
-          }}
-          openState={openState}
-          onSnap={(state) => setOpenState(state)}
-          // isOpenFull={isSheetOpenFull}
-          // setIsOpenFull={(value) => setSheetIsOpenFull(value)}
-        />
-      }
+
+      <CalendarSheet
+        isOpen={isSheetOpen}
+        onClose={(state) => {
+          console.log('onClose: ' + state);
+        }}
+        openState={openState}
+        onSnap={(state) => setOpenState(state)}
+      />
 
       <NavHider>
         <Nav {...rest} className={`bg-primary bg-opacity-70 backdrop-filter backdrop-blur-sm shadow-lg ${className}`}>
           {/* Small- Screens */}
           <div className="flex lg:hidden w-full justify-between items-center mx-2">
-            {showCalendar &&
+            {showCalendarButton &&
               <IconButton
                 onClick={() => {
                   setSheetOpen(true);
-                  if (openState === 'closed' || openState === 'small') {
+                  if (openState === 'closed') {
                     setOpenState('full');
-                  } else {
+                  } else if (openState === 'full') {
                     setOpenState('small');
+                  } else {
+                    setOpenState('closed');
                   }
                 }}
                 title="Calendar sheet"
@@ -137,7 +134,6 @@ export default function Navbar({
             <div></div>
             <IconButton
               onClick={() => {
-                // setSheetOpen(true);
                 setOpenState('closed');
                 setMenuIsOpen(!isMenuOpen);
               }}

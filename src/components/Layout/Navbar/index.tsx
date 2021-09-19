@@ -35,6 +35,7 @@ export default function Navbar({
 }: NavBarProps) {
   const [isMenuOpen, setMenuIsOpen] = useState(false);
   const [openState, setOpenState] = useState<OpenState>('closed');
+  const [prevOpenState, setPrevOpenState] = useState<OpenState>('closed');
   const [isSheetOpen, setSheetOpen] = useState(false);
 
   const [showCalendarButton, setShowCalendarButton] = useState(true);
@@ -60,7 +61,7 @@ export default function Navbar({
         isOpen={isMenuOpen}
         onClose={() => {
           setMenuIsOpen(false);
-          setOpenState('small');
+          setOpenState(prevOpenState);
           // setSheetIsOpenFull(false);
         }}
         title="Menu"
@@ -103,7 +104,9 @@ export default function Navbar({
       <CalendarSheet
         isOpen={isSheetOpen}
         onClose={(state) => {
-          console.log('onClose: ' + state);
+          if (!isMenuOpen && openState === 'full') {
+            setOpenState('small');
+          }
         }}
         openState={openState}
         onSnap={(state) => setOpenState(state)}
@@ -117,12 +120,16 @@ export default function Navbar({
               <IconButton
                 onClick={() => {
                   setSheetOpen(true);
-                  if (openState === 'closed') {
-                    setOpenState('full');
-                  } else if (openState === 'full') {
-                    setOpenState('small');
-                  } else {
-                    setOpenState('closed');
+                  switch (openState) {
+                    case 'closed':
+                      setOpenState('full');
+                      break;
+                    case 'full':
+                      setOpenState('small');
+                      break;
+                    case 'small':
+                      setOpenState('closed');
+                      break;
                   }
                 }}
                 title="Calendar sheet"
@@ -134,6 +141,7 @@ export default function Navbar({
             <div></div>
             <IconButton
               onClick={() => {
+                setPrevOpenState(openState);
                 setOpenState('closed');
                 setMenuIsOpen(!isMenuOpen);
               }}

@@ -1,5 +1,5 @@
 // import {useEffect, useState} from 'react';
-import styled from '@emotion/styled';
+// import styled from '@emotion/styled';
 import ReactCalendar from 'react-calendar';
 import {useAppDispatch, useAppSelector} from '@app/store/hooks';
 import {resetEndDate, selectCalendarDate} from '@app/store/imagesSlice';
@@ -12,52 +12,28 @@ import {compareAsc} from 'date-fns';
 
 // import './calendar.module.css';
 import 'react-calendar/dist/Calendar.css';
+import React, {useState} from 'react';
 
-const CalendarWrap = styled.div`
-  display: none;
-  @media (min-width: 1024px) {
-    grid-column: 3;
-    grid-row: 1;
-    position: sticky;
-    display: block;
-    align-self: flex-start;
-    margin-top: 0px;
-    top: 150px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 300px;
-  }
-`;
 
-const MyCalendar = styled(ReactCalendar)`
-
-`;
-
-export default function Calendar() {
+export default function Calendar({
+  ...rest
+}: React.HTMLAttributes<HTMLDivElement>) {
   const dispatch = useAppDispatch();
   const today = new Date();
   const calendarDate = useAppSelector(selectCalendarDate);
-  // const firstLoad = useAppSelector((state) => state.images.firstLoad);
-  // if (!firstLoad) {
-  //   today = dateNow;
-  // }
-
-  // const [selectedDate, setSelectedDate] = useState(today);
-
-  // useEffect(() => {
-  //   //dispatch(resetEndDate(selectedDate));
-  // }, [selectedDate, dispatch]);
+  // Keeping state local (as well as in redux) for performance reasons
+  const [selectedDate, rawSetSelectedDate] = useState(calendarDate);
 
   function setSelectedDate(date: Date) {
+    rawSetSelectedDate(date);
     dispatch(resetEndDate(date));
   }
 
   return (
-    <CalendarWrap className="">
-      <h2 className="text-center text-lg text-opacity-80 text-primary mb-2">Select a Start Date</h2>
-      <MyCalendar
+    <div {...rest}>
+      <ReactCalendar
         onChange={setSelectedDate}
-        value={calendarDate}
+        value={selectedDate}
         maxDate={today}
         minDate={new Date(1995, 5, 26)}
         tileDisabled={({activeStartDate, date, view}) => compareAsc(date, today) >= 0}
@@ -80,8 +56,8 @@ export default function Calendar() {
         // prev2Label=""
         nextAriaLabel="next"
         navigationAriaLabel="select a date to start the images at"
-        className={`shadow-md opacity-60`}
+        className={`shadow-md opacity-60 rounded-sm`}
       />
-    </CalendarWrap>
+    </div>
   );
 }

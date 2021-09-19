@@ -8,10 +8,28 @@ import GridWrapper from '../components/GridWrapper';
 import ImageCard from '@app/components/ImageCard';
 import LoadingSpinner from '@app/components/LoadingSpinner';
 import Title from '@app/components/Title';
-import Calendar from '@app/components/Calendar';
+import CalendarBox from '@app/components/Calendar';
 import MaxWidthWrapper from '@app/components/MaxWidthWrapper';
+import styled from '@emotion/styled';
+// import CalendarModal from '@app/components/CalendarModal';
 
 // import formatDate from '@app/hooks/formatDate';
+const CalendarWrap = styled.div`
+  display: none;
+  @media (min-width: 1024px) {
+    grid-column: 3;
+    grid-row: 1;
+    position: sticky;
+    display: block;
+    align-self: flex-start;
+    margin-top: 0px;
+    top: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.85;
+    /* width: 350px; */
+  }
+`;
 
 const Home: NextPage = () => {
   const dispatch = useAppDispatch();
@@ -41,19 +59,33 @@ const Home: NextPage = () => {
     statusText = <p>Error: {error}</p>;
   }
 
-  return (
-    <MaxWidthWrapper>
+  // const [isOpen, setIsOpen] = useState(false);
 
-      <section aria-label="page title" className="w-full flex flex-col items-center justify-center my-5">
-        <Title>Spacestagram</Title>
-        <h2 className="italic md:font-light text-base sm:text-lg md:text-xl">The final frontier</h2>
-      </section>
-      <GridWrapper charWidth={65}>
-        <Calendar />
-        <section
-          aria-label="Infinite scrolling list of images"
-        >
-          {imagesStatus === 'succeeded' || !firsLoad ?
+
+  return (
+    <>
+      {/* <CalendarModal isOpen={isOpen} setIsOpen={() => setIsOpen(false)}>
+        <CalendarBox />
+      </CalendarModal> */}
+
+      <MaxWidthWrapper>
+
+
+        <section aria-label="page title" className="w-full flex flex-col items-center justify-center my-5">
+          <Title>Spacestagram</Title>
+          <h2 className="italic md:font-light text-base sm:text-lg md:text-xl">The final frontier</h2>
+        </section>
+        <GridWrapper charWidth={65}>
+          <CalendarWrap className="shadow-md">
+            <div className={`flex flex-col bg-primary items-center justify-center w-full rounded-sm`}>
+              <h2 className="text-center text-lg text-opacity-90 text-black mt-2">Select a Start Date</h2>
+              <CalendarBox style={{width: '300px', margin: '5px'}} />
+            </div>
+          </CalendarWrap>
+          <section
+            aria-label="Infinite scrolling list of images"
+          >
+            {imagesStatus === 'succeeded' || !firsLoad ?
               (<InfiniteScroll
                 dataLength={images.length}
                 next={fetchData}
@@ -83,10 +115,11 @@ const Home: NextPage = () => {
 
               </InfiniteScroll>) :
               <div><LoadingSpinner size={40} /></div>
-          }
-        </section>
-      </GridWrapper>
-    </MaxWidthWrapper>
+            }
+          </section>
+        </GridWrapper>
+      </MaxWidthWrapper>
+    </>
   );
 };
 

@@ -97,7 +97,7 @@ export default function ImageCard({
       </ImageModal>
 
       <div
-        className="p-2 flex flex-col gap-3 border-solid border-2 border-secondary border-opacity-60 shadow-md max-w-xl bg-app-bg-secondary"
+        className="p-2 flex flex-col gap-3 border-solid border-2 border-secondary border-opacity-60 shadow-lg max-w-xl bg-app-bg-secondary"
         {...rest}
       >
 

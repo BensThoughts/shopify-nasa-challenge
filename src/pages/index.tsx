@@ -76,12 +76,14 @@ const Home: NextPage = () => {
           <h2 className="italic md:font-light text-base sm:text-lg md:text-xl">The final frontier</h2>
         </section>
         <GridWrapper charWidth={65}>
-          <CalendarWrap className="shadow-md">
-            <div className={`flex flex-col bg-primary items-center justify-center w-full rounded-sm`}>
+
+          <CalendarWrap>
+            <div className="flex flex-col bg-primary opacity-90 items-center justify-center w-full rounded-sm shadow-md">
               <h2 className="text-center text-lg text-opacity-90 text-black mt-2">Select a Start Date</h2>
               <CalendarBox style={{width: '300px', margin: '5px'}} />
             </div>
           </CalendarWrap>
+
           <section
             aria-label="Infinite scrolling list of images"
           >

@@ -7,7 +7,7 @@ import NavHider from './NavHider';
 import MenuDrawer from '@app/components/MenuDrawer';
 import MenuItem from '@app/components/Layout/MenuItem';
 import IconButton from '@app/components/IconButton';
-import CalendarSheet from '@app/components/CalendarSheet';
+import CalendarSheet, {OpenState} from '@app/components/CalendarSheet';
 
 const Nav = styled.nav`
   display: flex;
@@ -34,17 +34,20 @@ export default function Navbar({
   ...rest
 }: NavBarProps) {
   const [isMenuOpen, setMenuIsOpen] = useState(false);
-  const [isSheetOpen, setSheetIsOpen] = useState(false);
-  const [showCalendarButton, setShowCalendarButton] = useState(true);
+  const [openState, setOpenState] = useState<OpenState>('closed');
+  const [isSheetOpen, setSheetOpen] = useState(false);
+
+  const [showCalendar, setShowCalendar] = useState(true);
+
   const router = useRouter();
 
   useEffect(() => {
     if (router) {
       const route = router.asPath;
       if (route != '/') {
-        setShowCalendarButton(false);
+        setShowCalendar(false);
       } else {
-        setShowCalendarButton(true);
+        setShowCalendar(true);
       }
     }
   }, [router]);
@@ -53,12 +56,22 @@ export default function Navbar({
   return (
     <>
 
-      <MenuDrawer isOpen={isMenuOpen} setIsOpen={setMenuIsOpen} title="Menu" description="Explore Space!">
+      <MenuDrawer
+        isOpen={isMenuOpen}
+        onClose={() => {
+          setMenuIsOpen(false);
+          setOpenState('small');
+          // setSheetIsOpenFull(false);
+        }}
+        title="Menu"
+        description="Explore Space!"
+      >
         <div className="flex flex-col items-center justify-end content-between pt-0 w-full">
           <MenuItem
             href="/"
             onClick={() => {
               setMenuIsOpen(false);
+              // setSheetIsOpen(false);
             }}
             className="hover:bg-secondary text-primary-dark w-full h-10 flex items-center justify-center text-xl mt-7"
           >
@@ -67,7 +80,7 @@ export default function Navbar({
           <MenuItem
             href="/favorites"
             onClick={() => {
-              setSheetIsOpen(false);
+              // setSheetIsOpen(false);
               setMenuIsOpen(false);
             }}
             className="hover:bg-secondary text-primary-dark w-full h-10 flex items-center justify-center text-xl"
@@ -77,7 +90,7 @@ export default function Navbar({
           <MenuItem
             href="/contact"
             onClick={() => {
-              setSheetIsOpen(false);
+              //  setSheetIsOpen(false);
               setMenuIsOpen(false);
             }}
             className="hover:bg-secondary text-primary-dark w-full h-10 flex items-center justify-center text-xl"
@@ -86,14 +99,35 @@ export default function Navbar({
           </MenuItem>
         </div>
       </MenuDrawer>
-      <CalendarSheet isOpen={isSheetOpen && !isMenuOpen} setIsOpen={setSheetIsOpen} />
+      {showCalendar &&
+        <CalendarSheet
+          isOpen={isSheetOpen}
+          onClose={() => {
+            console.log('onClose Navbar');
+            // setSheetIsOpenSmall(true);
+            // setSheetIsOpenFull(true);
+          }}
+          openState={openState}
+          onSnap={(state) => setOpenState(state)}
+          // isOpenFull={isSheetOpenFull}
+          // setIsOpenFull={(value) => setSheetIsOpenFull(value)}
+        />
+      }
+
       <NavHider>
         <Nav {...rest} className={`bg-primary bg-opacity-70 backdrop-filter backdrop-blur-sm shadow-lg ${className}`}>
           {/* Small- Screens */}
           <div className="flex lg:hidden w-full justify-between items-center mx-2">
-            {showCalendarButton &&
+            {showCalendar &&
               <IconButton
-                onClick={() => setSheetIsOpen(!isSheetOpen)}
+                onClick={() => {
+                  setSheetOpen(true);
+                  if (openState === 'closed' || openState === 'small') {
+                    setOpenState('full');
+                  } else {
+                    setOpenState('small');
+                  }
+                }}
                 title="Calendar sheet"
                 className="lg:hidden ml-3"
               >
@@ -102,7 +136,11 @@ export default function Navbar({
             }
             <div></div>
             <IconButton
-              onClick={() => setMenuIsOpen(!isMenuOpen)}
+              onClick={() => {
+                // setSheetOpen(true);
+                setOpenState('closed');
+                setMenuIsOpen(!isMenuOpen);
+              }}
               className="lg:hidden mr-3"
               title="Side navigation menu"
             >

@@ -7,7 +7,7 @@ type MenuDrawerProps = {
   description?: string,
   children: React.ReactNode,
   isOpen: boolean
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+  onClose: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function MenuDrawer({
@@ -15,13 +15,13 @@ export default function MenuDrawer({
   description = '',
   children,
   isOpen,
-  setIsOpen,
+  onClose,
 }: MenuDrawerProps) {
   return (
     <Transition show={isOpen} as={Fragment}>
       <Dialog
         unmount={false}
-        onClose={() => setIsOpen(false)}
+        onClose={() => onClose(false)}
         className="fixed z-50 inset-0 overflow-y-auto"
       >
         <div className="flex w-3/4">
@@ -54,7 +54,7 @@ export default function MenuDrawer({
                 {children}
               </div>
               <div className="self-center mt-10">
-                <Button onClick={() => setIsOpen(!isOpen)}>Close</Button>
+                <Button onClick={() => onClose(false)}>Close</Button>
               </div>
             </div>
           </Transition.Child>

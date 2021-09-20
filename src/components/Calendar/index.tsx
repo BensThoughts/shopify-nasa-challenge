@@ -13,6 +13,23 @@ import {compareAsc} from 'date-fns';
 // import './calendar.module.css';
 import 'react-calendar/dist/Calendar.css';
 import React, {useState} from 'react';
+import styled from '@emotion/styled';
+
+const CalendarY = styled(ReactCalendar)`
+.react-calendar__year-view
+.react-calendar__tile,
+.react-calendar__decade-view
+.react-calendar__tile,
+.react-calendar__century-view
+.react-calendar__tile {
+    padding: 1.5em 0.5em;
+}
+
+.react-calendar__month-view__days__day--weekend {
+    color: black;
+}
+
+`;
 
 
 export default function Calendar({
@@ -31,7 +48,7 @@ export default function Calendar({
 
   return (
     <div {...rest}>
-      <ReactCalendar
+      <CalendarY
         onChange={setSelectedDate}
         value={selectedDate}
         maxDate={today}

@@ -82,7 +82,7 @@ export default function CalendarSheet({
                 <div className={`rounded-sm`}>
                   <h2 className="text-center text-xl text-opacity-100 text-primary mx-2 font-normal">Select a Start Date</h2>
                   <Calendar
-                    className="rounded-lg"
+                    className="rounded-lg opacity-80"
                     style={{
                       backgroundColor: 'rgba(var(--color-app-accent), 0.8)',
                       marginTop: '0.5rem',

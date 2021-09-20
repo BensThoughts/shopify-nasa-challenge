@@ -8,7 +8,7 @@ import GridWrapper from '../components/GridWrapper';
 import ImageCard from '@app/components/ImageCard';
 import LoadingSpinner from '@app/components/LoadingSpinner';
 import Title from '@app/components/Title';
-import CalendarBox from '@app/components/Calendar';
+import Calendar from '@app/components/Calendar';
 import MaxWidthWrapper from '@app/components/MaxWidthWrapper';
 import styled from '@emotion/styled';
 // import CalendarModal from '@app/components/CalendarModal';
@@ -80,7 +80,7 @@ const Home: NextPage = () => {
           <CalendarWrap>
             <div className="flex flex-col bg-primary opacity-90 items-center justify-center w-full rounded-sm shadow-md">
               <h2 className="text-center text-lg text-opacity-90 text-black mt-2">Select a Start Date</h2>
-              <CalendarBox style={{width: '300px', margin: '5px'}} />
+              <Calendar style={{width: '300px', margin: '5px'}} className="opacity-80" />
             </div>
           </CalendarWrap>
 

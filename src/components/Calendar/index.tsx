@@ -56,7 +56,7 @@ export default function Calendar({
         // prev2Label=""
         nextAriaLabel="next"
         navigationAriaLabel="select a date to start the images at"
-        className={`shadow-md opacity-60 rounded-sm`}
+        className={`rounded-sm`}
       />
     </div>
   );

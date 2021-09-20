@@ -16,6 +16,18 @@ import React, {useState} from 'react';
 import styled from '@emotion/styled';
 
 const CalendarY = styled(ReactCalendar)`
+  button:disabled {
+    color: rgba(117, 117, 117, 0.5);
+  }
+
+  .react-calendar__month-view__days__day--weekend {
+    color: black;
+  }
+  
+  .react-calendar__month-view__days__day--neighboringMonth {
+    color: #757575;
+  }
+
 .react-calendar__year-view
 .react-calendar__tile,
 .react-calendar__decade-view
@@ -25,9 +37,7 @@ const CalendarY = styled(ReactCalendar)`
     padding: 1.5em 0.5em;
 }
 
-.react-calendar__month-view__days__day--weekend {
-    color: black;
-}
+
 
 `;
 

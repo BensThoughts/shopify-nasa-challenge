@@ -67,8 +67,8 @@ export default function CalendarSheet({
           }
         }}
         springConfig={{
-          stiffness: 300,
-          damping: 30,
+          stiffness: 200,
+          damping: 20,
           mass: 0.15,
         }}
         className="lg:hidden"

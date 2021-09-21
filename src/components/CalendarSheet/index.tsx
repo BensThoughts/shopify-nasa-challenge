@@ -66,6 +66,11 @@ export default function CalendarSheet({
               break;
           }
         }}
+        springConfig={{
+          stiffness: 300,
+          damping: 30,
+          mass: 0.15,
+        }}
         className="lg:hidden"
         style={style}
         ref={ref}

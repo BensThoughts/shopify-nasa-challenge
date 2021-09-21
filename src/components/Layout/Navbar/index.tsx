@@ -107,6 +107,7 @@ export default function Navbar({
           if (!isMenuOpen && openState === 'full') {
             setOpenState('small');
           }
+          setOpenState('closed');
         }}
         openState={openState}
         onSnap={(state) => setOpenState(state)}
@@ -128,7 +129,7 @@ export default function Navbar({
                       setOpenState('small');
                       break;
                     case 'small':
-                      setOpenState('closed');
+                      setOpenState('full');
                       break;
                   }
                 }}

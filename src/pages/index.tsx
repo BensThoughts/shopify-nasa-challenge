@@ -26,7 +26,7 @@ const CalendarWrap = styled.div`
     top: 150px;
     margin-left: auto;
     margin-right: auto;
-    opacity: 0.85;
+    opacity: 1;
     /* width: 350px; */
   }
 `;
@@ -78,9 +78,9 @@ const Home: NextPage = () => {
         <GridWrapper charWidth={65}>
 
           <CalendarWrap>
-            <div className="flex flex-col bg-primary opacity-90 items-center justify-center w-full rounded-sm shadow-md">
+            <div className="flex flex-col bg-app-bg-secondary opacity-100 items-center justify-center w-full rounded-sm shadow-md">
               <h2 className="text-center text-lg text-opacity-90 text-black mt-2">Select a Start Date</h2>
-              <Calendar style={{width: '300px', margin: '5px'}} className="opacity-80" />
+              <Calendar style={{width: '300px', margin: '5px'}} className="opacity-70" />
             </div>
           </CalendarWrap>
 

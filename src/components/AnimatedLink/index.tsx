@@ -7,7 +7,7 @@ const A = styled.a`
   overflow: hidden;
   text-decoration: none;
 
-  &:after {
+  &::after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -21,7 +21,7 @@ const A = styled.a`
     transition: opacity 300ms, transform 300ms;
   }
 
-  &:hover:after {
+  &:hover::after {
     opacity: 1;
     transform: scale(1);
   }

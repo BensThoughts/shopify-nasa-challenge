@@ -1,41 +1,11 @@
 import {useState, HTMLAttributes} from 'react';
 import styled from '@emotion/styled';
 
-import Image from 'next/image';
 import DateComponent from '@app/components/DateComponent';
 import ImageModal from '@app/components/ImageModal';
 import DownloadButton from '@app/components/DownloadButton';
+import ImageBlurContainer from '@app/components/ImageBlurContainer';
 
-const shimmer = (w: number, h: number) => `
-<svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <defs>
-    <linearGradient id="g">
-      <stop stop-color="#333" offset="10%" />
-      <stop stop-color="#222" offset="50%" />
-      <stop stop-color="#333" offset="90%" />
-    </linearGradient>
-  </defs>
-  <rect width="${w}" height="${h}" fill="#333" />
-  <rect id="r" width="${w}" height="${h}" fill="url(#g)" />
-  <animate xlink:href="#r" attributeName="y" from="-${h}" to="${h}" dur="1s" repeatCount="indefinite"  />
-</svg>`;
-
-const toBase64 = (str: string) =>
-  typeof window === 'undefined' ?
-    Buffer.from(str).toString('base64') :
-    window.btoa(str);
-
-const ImageBlurContainer = styled.div<{
-  blur: boolean
-}>`
-  height: 100%;
-  display: flex;
-  
-  align-items: center;
-
-  filter: ${({blur = true}) => blur ? 'blur(20px)' : 'none'};
-  transition: ${({blur = true}) => blur ? 'none' : 'filter 0.2s ease-out'};
-`;
 
 const CardContainer = styled.div`
   max-width: 20rem;
@@ -53,8 +23,8 @@ type ImageCardProps = {
   hdurl: string;
 } & HTMLAttributes<HTMLDivElement>
 
-const SMALL_SIZE = 300;
-const LARGE_SIZE = 960;
+// const SMALL_SIZE = 300;
+// const LARGE_SIZE = 960;
 
 export default function ImageCard({
   title,
@@ -63,8 +33,6 @@ export default function ImageCard({
   hdurl,
   ...rest
 }: ImageCardProps) {
-  const [blurSmall, setBlurSmall] = useState(true);
-  const [blurFull, setBlurFull] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -74,20 +42,7 @@ export default function ImageCard({
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
       >
-        <ImageBlurContainer blur={blurFull}>
-          <Image
-            src={url}
-            alt={title}
-            width={LARGE_SIZE}
-            height={LARGE_SIZE}
-            placeholder="blur"
-            onClick={() => setIsOpen(false)}
-            onLoadingComplete={() => setBlurFull(false)}
-            layout="intrinsic"
-            blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(LARGE_SIZE, LARGE_SIZE))}`}
-            className="object-contain"
-          />
-        </ImageBlurContainer>
+        <ImageBlurContainer src={url} title={title} size="large" />
       </ImageModal>
 
       <CardContainer
@@ -98,20 +53,7 @@ export default function ImageCard({
         {/* Image */}
         <div className="bg-black flex items-center">
           <button aria-label="Open image in full screen" onClick={() => setIsOpen(true)}>
-            <ImageBlurContainer blur={blurSmall} className="">
-              <Image
-                src={url}
-                alt={title}
-                title={title}
-                width={SMALL_SIZE}
-                height={SMALL_SIZE}
-                placeholder="blur"
-                onLoadingComplete={() => setBlurSmall(false)}
-                layout="intrinsic"
-                blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(SMALL_SIZE, SMALL_SIZE))}`}
-                className="object-cover" // TODO: object-cover or object-contain, which looks better?
-              />
-            </ImageBlurContainer>
+            <ImageBlurContainer src={url} title={title} size="small" />
           </button>
         </div>
 

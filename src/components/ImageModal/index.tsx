@@ -7,8 +7,8 @@ const ImageWrap = styled.div`
   height: 65vh;
   max-height: 65vh;
   @media (min-width: 1024px) {
-    height: calc(100vh - 200px);
-    max-height: calc(100vh - 200px);
+    height: calc(100vh - 100px);
+    max-height: calc(100vh - 100px);
   }
   /* max-width: 800px; */
   /* max-height: 800px;

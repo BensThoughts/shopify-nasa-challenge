@@ -41,28 +41,29 @@ const ImageContainer = styled.div<{
 type ImageBlurContainerProps = {
   src: string,
   title: string,
-  size: 'small' | 'large'
+  size: 'small' | 'large',
+  blur: boolean,
 } & React.HTMLAttributes<HTMLDivElement>
 
 export default function ImageBlurContainer({
   src,
   title,
   size,
+  blur,
   ...rest
 }: ImageBlurContainerProps) {
-  const [blur, setBlur] = useState(true);
-  // const {width, height} = useWindowSize();
+  const [blurRaw, setBlurRaw] = useState(blur);
   // console.log(width);
 
   return (
-    <ImageContainer blur={blur} {...rest}>
+    <ImageContainer blur={blurRaw} {...rest}>
       <Image
         src={src}
         alt={title}
         width={size === 'small' ? SMALL_SIZE : LARGE_SIZE}
         height={size === 'small' ? SMALL_SIZE : LARGE_SIZE}
         placeholder="blur"
-        onLoadingComplete={() => setBlur(false)}
+        onLoadingComplete={() => setBlurRaw(false)}
         layout="intrinsic"
         blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(size === 'small' ? SMALL_SIZE : LARGE_SIZE, size === 'small' ? SMALL_SIZE : LARGE_SIZE))}`}
         className={size === 'small' ? 'object-cover' : 'object-contain'} // TODO: object-cover or object-contain, which looks better?

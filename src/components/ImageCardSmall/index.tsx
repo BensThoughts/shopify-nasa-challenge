@@ -42,7 +42,7 @@ export default function ImageCard({
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
       >
-        <ImageBlurContainer src={url} title={title} size="large" />
+        <ImageBlurContainer src={url} title={title} size="large" blur={false} />
       </ImageModal>
 
       <CardContainer
@@ -53,7 +53,7 @@ export default function ImageCard({
         {/* Image */}
         <div className="bg-black flex items-center">
           <button aria-label="Open image in full screen" onClick={() => setIsOpen(true)}>
-            <ImageBlurContainer src={url} title={title} size="small" />
+            <ImageBlurContainer src={url} title={title} size="small" blur={true} />
           </button>
         </div>
 

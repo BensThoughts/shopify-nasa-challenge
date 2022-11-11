@@ -15,7 +15,6 @@ import formatDate from '@app/hooks/formatDate';
 import {compareAsc, parseISO, subDays} from 'date-fns';
 
 const DATE_SPREAD = 10;
-const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
 function hasMoreImages(endDate: string) {
   const eDate = parseISO(endDate);
@@ -72,6 +71,11 @@ const initialState: ImageMetadataState = imagesAdapter.getInitialState({
   firstLoad: true,
   moreImages: true,
 });
+
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+if (!API_KEY) {
+  throw new Error('API key not set properly');
+}
 
 export const fetchImagesMetadata = createAsyncThunk<
   ImageMetadataResponse[],

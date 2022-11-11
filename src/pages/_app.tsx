@@ -19,10 +19,7 @@ function MyApp({Component, pageProps}: AppProps) {
   const router = useRouter();
 
   useEffect(() => {
-    Fathom.load('OVSLIPUZ', {
-      url: 'https://descriptive-welcome.bensthoughts.dev/script.js',
-      includedDomains: ['shopify-nasa-challenge.netlify.app'],
-    });
+    Fathom.load('OVSLIPUZ');
 
     function onRouteChangeComplete() {
       Fathom.trackPageview();

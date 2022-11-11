@@ -15,6 +15,7 @@
     "@reduxjs/toolkit": "^1.6.1",
     "axios": "^0.21.4",
     "date-fns": "^2.23.0",
+    "fathom-client": "^3.5.0",
     "framer-motion": "^4.1.17",
     "next": "11.1.2",
     "next-seo": "^4.26.0",

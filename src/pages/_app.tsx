@@ -10,28 +10,28 @@ const persister = persistStore(store);
 import NextSeoConfig from '@app/next-seo.config';
 import Navbar from '@app/components/Layout/Navbar';
 
-import * as Fathom from 'fathom-client';
-import {useRouter} from 'next/router';
-import {useEffect} from 'react';
+// import * as Fathom from 'fathom-client';
+// import {useRouter} from 'next/router';
+// import {useEffect} from 'react';
 
 
 function MyApp({Component, pageProps}: AppProps) {
-  const router = useRouter();
+  // const router = useRouter();
 
-  useEffect(() => {
-    Fathom.load('OVSLIPUZ');
+  // useEffect(() => {
+  //   Fathom.load('OVSLIPUZ');
 
-    function onRouteChangeComplete() {
-      Fathom.trackPageview();
-    }
+  //   function onRouteChangeComplete() {
+  //     Fathom.trackPageview();
+  //   }
 
-    router.events.on('routeChangeComplete', onRouteChangeComplete);
+  //   router.events.on('routeChangeComplete', onRouteChangeComplete);
 
-    return () => {
-      router.events.off('routeChangeComplete', onRouteChangeComplete);
-    };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //   return () => {
+  //     router.events.off('routeChangeComplete', onRouteChangeComplete);
+  //   };
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <>
